@@ -33,9 +33,11 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email, password;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDataBase;
+
 
     private static final String TAG = "LoginActivity";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         btnContinue = findViewById(R.id.button);
         //FirebaseAuth.getInstance().signOut();
         mAuth = FirebaseAuth.getInstance();
-        mDataBase = FirebaseDatabase.getInstance().getReference();
+
+
 
         txvNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,8 +93,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            updateUI(currentUser);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -106,18 +109,26 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    private void updateUI(final FirebaseUser currentUser) {
+    private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
+
             FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid())
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                    .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getValue() != null){
-                                startActivity(new Intent(LoginActivity.this, AccountActivity.class));
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            User inneruser = dataSnapshot.getValue(User.class);
+
+                            if(inneruser.getEmail().equals(currentUser.getEmail())){
+                                if(isCompleteUser(inneruser)){
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                }else{
+                                    startActivity(new Intent(LoginActivity.this, AccountActivity.class));
+                                }
+
                             } else {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }
-
                         }
 
                         @Override
@@ -126,9 +137,14 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
 
+
         }
     }
 
 
+    private boolean isCompleteUser(User user){
+        return (user.getName() != null && user.getBirthDate() != null && user.getCity() != null &&
+                user.getCountry() != null && user.getGender() != null && user.getState() != null && user.getZipCode() != null);
+    }
 
 }

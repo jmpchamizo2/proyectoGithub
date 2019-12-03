@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,6 +42,8 @@ public class UserActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private String idToken = null;
+
+    User user = new User();
 
     private TextWatcher tw = new TextWatcher() {
         @Override
@@ -97,11 +100,16 @@ public class UserActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            if (writeUser(user)){
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            if (createUser(currentUser)){
                                 Log.w(TAG, "createUser:success", task.getException());
+                                updateUI(currentUser);
+                            } else {
+                                Toast.makeText(UserActivity.this, "Create user failed.",
+                                        Toast.LENGTH_SHORT).show();
+                                updateUI(null);
                             }
-                            updateUI(user);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -114,34 +122,50 @@ public class UserActivity extends AppCompatActivity {
                 });
     }
 
-    private void updateUI(final FirebaseUser currentUser) {
+
+    private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
+
             FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid())
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.getValue() != null){
-                        startActivity(new Intent(UserActivity.this, AccountActivity.class));
-                    } else {
-                        startActivity(new Intent(UserActivity.this, MainActivity.class));
-                    }
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            User inneruser = dataSnapshot.getValue(User.class);
 
-                }
+                            if(inneruser.getEmail().equals(currentUser.getEmail())){
+                                if(isCompleteUser(inneruser)){
+                                    startActivity(new Intent(UserActivity.this, MainActivity.class));
+                                }else{
+                                    startActivity(new Intent(UserActivity.this, AccountActivity.class));
+                                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                            } else {
+                                startActivity(new Intent(UserActivity.this, MainActivity.class));
+                            }
+                        }
 
-                }
-            });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
 
         }
+    }
+
+
+    private boolean isCompleteUser(User user){
+        return (user.getName() != null && user.getBirthDate() != null && user.getCity() != null &&
+                user.getCountry() != null && user.getGender() != null && user.getState() != null && user.getZipCode() != null);
     }
 
 
     @SuppressLint("ResourceAsColor")
     private void activateButton(){
         if (edtPass2.getText().toString().equals(edtPass.getText().toString())){
-            edtPass2.setBackgroundColor(R.color.colorAcept);
+            edtPass2.setBackgroundColor(ContextCompat.getColor(UserActivity.this, R.color.colorAcept));
             btnUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -155,23 +179,65 @@ public class UserActivity extends AppCompatActivity {
 
                 }
             });
-            edtPass2.setBackgroundColor(R.color.colorError);
+            edtPass2.setBackgroundColor(ContextCompat.getColor(UserActivity.this, R.color.colorError));
         }
     }
-    private boolean writeUser(FirebaseUser user){
-        final boolean[] result = {true};
+
+    private boolean createUser(FirebaseUser currentUser){
+        final boolean[] resultado = {true};
         DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mDataBaseUsersUserId = mDataBase.child("users").child(user.getUid());
-        mDataBaseUsersUserId.child("email").setValue(user.getEmail()).addOnFailureListener(new OnFailureListener() {
+        DatabaseReference mDataBaseUsersUserEmail = mDataBase.child("users").child(currentUser.getUid());
+        mDataBaseUsersUserEmail.child("email").setValue(currentUser.getEmail()).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                result[0] = false;
+                resultado[0] = false;
+            }
+        });
+        mDataBaseUsersUserEmail.child("name").setValue(null).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                resultado[0] = false;
+            }
+        });
+        mDataBaseUsersUserEmail.child("birthDate").setValue(null).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                resultado[0] = false;
+            }
+        });
+        mDataBaseUsersUserEmail.child("gender").setValue(null).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                resultado[0] = false;
+            }
+        });
+        mDataBaseUsersUserEmail.child("country").setValue(null).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                resultado[0] = false;
+            }
+        });
+        mDataBaseUsersUserEmail.child("state").setValue(null).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                resultado[0] = false;
+            }
+        });
+        mDataBaseUsersUserEmail.child("city").setValue(null).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                resultado[0] = false;
+            }
+        });
+        mDataBaseUsersUserEmail.child("zipCode").setValue(null).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                resultado[0] = false;
             }
         });
 
-        return result[0];
+        return resultado[0];
     }
-
 
 
 }

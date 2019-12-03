@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class User {
-    private String id;
+    //private String id;
     private String email;
     private String name;
     private String birthDate;
@@ -16,10 +16,20 @@ public class User {
     private String zipCode;
     private List<String> garments;
 
-    public User(){}
+    public User(){
+        this.email = null;
+        this.name = null;
+        this.birthDate = null;
+        this.gender = null;
+        this.country = null;
+        this.state = null;
+        this.city = null;
+        this.zipCode = null;
+        garments = new ArrayList<String>();
+    }
 
-    public User(String id, String email, String name, String birthDate, String gender, String country, String state, String city, String zipCode) {
-        this.id = id;
+    public User(String email, String name, String birthDate, String gender, String country, String state, String city, String zipCode) {
+        //this.id = id;
         this.email = email;
         this.name = name;
         this.birthDate = birthDate;
@@ -31,9 +41,9 @@ public class User {
         garments = new ArrayList<String>();
     }
 
-    public String getId() {
-        return id;
-    }
+    //public String getId() {
+    //    return id;
+    //}
 
     public String getEmail() {
         return email;

@@ -22,8 +22,8 @@
     <string name="garment">Garmen</string>
     <string name="outfit_name">Outfit</string>
     <string name="cont">Continue</string>
-    <string name="male">Man</string>
-    <string name="female">Woman</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
     <string name="other">Other</string>
     <string name="notAnswer">Unanswered</string>
     <string name="newUSer">New user</string>

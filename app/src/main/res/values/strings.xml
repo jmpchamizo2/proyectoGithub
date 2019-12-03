@@ -21,8 +21,8 @@
     <string name="garment">Prenda</string>
     <string name="outfit_name">Outfit</string>
     <string name="cont">Siguiente</string>
-    <string name="male">Hombre</string>
-    <string name="female">Mujer</string>
+    <string name="male">Masculino</string>
+    <string name="female">Femenino</string>
     <string name="other">Otro</string>
     <string name="notAnswer">No responder</string>
     <string name="newUSer">Nuevo usuario</string>

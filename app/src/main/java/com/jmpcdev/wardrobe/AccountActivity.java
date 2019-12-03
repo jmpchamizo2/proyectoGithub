@@ -35,15 +35,16 @@ public class AccountActivity extends AppCompatActivity {
 
     private EditText edtNameUser, edtEmailUser, edtBirthDate, edtCountry, edtState, edtCity, edtZipCode;
     private RadioGroup rdgGender;
+    private RadioButton rdbMale, rdbFemale, rdbOther, rdbUnans;
     private Button btnUser;
     private ImageView imvUserHome;
 
 
-    private String idToken;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private static final String TAG = "AccountActivity";
 
+    private final User user = new User();
 
 
 
@@ -63,6 +64,10 @@ public class AccountActivity extends AppCompatActivity {
         rdgGender = findViewById(R.id.rdgGender);
         btnUser = findViewById(R.id.btnUser);
         imvUserHome = findViewById(R.id.imvUserHome);
+        rdbFemale = findViewById(R.id.rdbFemale);
+        rdbMale = findViewById(R.id.rdbMale);
+        rdbOther = findViewById(R.id.rdbOther);
+        rdbUnans = findViewById(R.id.rdbNotAnswer);
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -73,7 +78,7 @@ public class AccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                User user = new User(currentUser.getUid(),
+                User user = new User(//currentUser.getUid(),
                                      currentUser.getEmail(),
                                      edtNameUser.getText().toString(),
                                      edtBirthDate.getText().toString(),
@@ -82,11 +87,8 @@ public class AccountActivity extends AppCompatActivity {
                                      edtState.getText().toString(),
                                      edtCity.getText().toString(),
                                      edtZipCode.getText().toString());
-                if (writeUser(user)){
-                    System.out.println("Usuario insertado correctamente");
-                } else {
-                    System.out.println("Usuario no insertado");
-                }
+                writeUser(user);
+                startActivity(new Intent(AccountActivity.this, MainActivity.class));
             }
         });
 
@@ -101,8 +103,8 @@ public class AccountActivity extends AppCompatActivity {
 
     }
 
-    private void goLoginIfUserNotExits(FirebaseUser firebaseUser){
-        if(firebaseUser == null){
+    private void goLoginIfUserNotExits(FirebaseUser currentUser){
+        if(currentUser == null){
             new Intent(AccountActivity.this, LoginActivity.class);
         }
     }
@@ -123,75 +125,90 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
-    private boolean writeUser(User user){
-        final boolean[] resultado = {true};
+    private void writeUser(User user){
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mDataBaseUsersUserEmail = mDataBase.child("users").child(user.getId());
-        mDataBaseUsersUserEmail.child("name").setValue(user.getName()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("birthDate").setValue(user.getBirthDate()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("gender").setValue(user.getGender()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("country").setValue(user.getCountry()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("state").setValue(user.getState()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("city").setValue(user.getCity()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("zipCode").setValue(user.getZipCode()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-
-        return resultado[0];
+        DatabaseReference mDataBaseUsersUserEmail = mDataBase.child("users").child(currentUser.getUid());
+        mDataBaseUsersUserEmail.child("name").setValue(user.getName());
+        mDataBaseUsersUserEmail.child("birthDate").setValue(user.getBirthDate());
+        mDataBaseUsersUserEmail.child("gender").setValue(user.getGender());
+        mDataBaseUsersUserEmail.child("country").setValue(user.getCountry());
+        mDataBaseUsersUserEmail.child("state").setValue(user.getState());
+        mDataBaseUsersUserEmail.child("city").setValue(user.getCity());
+        mDataBaseUsersUserEmail.child("zipCode").setValue(user.getZipCode());
     }
+
+
 
 
     private void updateUserValues(FirebaseUser user){
         if (user != null) {
-           FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid())
-                   .addListenerForSingleValueEvent(new ValueEventListener() {
-                       @Override
-                       public void onDataChange(DataSnapshot dataSnapshot) {
-                           for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                               edtEmailUser.setText(ds.child("email").getValue(String.class));
-                           }
+            FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid())
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User innerUSer = dataSnapshot.getValue(User.class);
+                            completeEdtUser(innerUSer);
+                        }
 
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                       }
-                       @Override
-                       public void onCancelled(DatabaseError databaseError) {
-
-                       }
-                   });
+                        }
+                    });
         }
     }
+
+    private void completeEdtUser(User user){
+        edtEmailUser.setText(user.getEmail());
+        if(user.getZipCode() != null){
+            edtZipCode.setText(user.getZipCode());
+        }
+        if(user.getState() != null){
+            edtState.setText(user.getState());
+        }
+        if(user.getGender() != null){
+            switch (user.getGender()){
+                case "male":
+                    rdbMale.setChecked(true);
+                    rdbFemale.setChecked(false);
+                    rdbOther.setChecked(false);
+                    rdbUnans.setChecked(false);
+                    break;
+                case "female":
+                    rdbMale.setChecked(false);
+                    rdbFemale.setChecked(true);
+                    rdbOther.setChecked(false);
+                    rdbUnans.setChecked(false);
+                    break;
+                case "other":
+                    rdbMale.setChecked(false);
+                    rdbFemale.setChecked(false);
+                    rdbOther.setChecked(true);
+                    rdbUnans.setChecked(false);
+                    break;
+                case "unanswered":
+                    rdbMale.setChecked(false);
+                    rdbFemale.setChecked(false);
+                    rdbOther.setChecked(false);
+                    rdbUnans.setChecked(true);
+                    break;
+            }
+        }
+        if(user.getCountry() != null){
+            edtCountry.setText(user.getCountry());
+        }
+        if(user.getCity() != null){
+            edtCity.setText(user.getCity());
+        }
+        if(user.getName() != null){
+            edtNameUser.setText(user.getName());
+        }
+        if(user.getBirthDate() != null){
+            edtBirthDate.setText(user.getBirthDate());
+        }
+
+    }
+
 
 }
