@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@android:color/white"
+tools:context="com.jmpcdev.wardrobe.MainActivity">
+
+<LinearLayout
+    android:id="@+id/lilBackground"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:background="@drawable/background_main"
+    android:orientation="vertical"
+    app:layout_constraintHeight_percent="0.87"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/imvWear"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imvWeather"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/soleado"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imvTempMin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4" />
+
+            <ImageView
+                android:id="@+id/imvTempMax"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/txvTempMax"
+                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintStart_toEndOf="@id/imvWeather"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.05"
+                app:srcCompat="@drawable/temp_max" />
+
+
+
+            <ImageView
+                android:id="@+id/imvTempMin"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:srcCompat="@drawable/temp_min"
+                app:layout_constraintStart_toEndOf="@id/txvTempMax"
+                app:layout_constraintEnd_toStartOf="@id/txvTempMin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_percent="0.05"
+                app:layout_constraintHeight_percent="0.4"/>
+
+            <TextView
+                android:id="@+id/txvTempMin"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="5"
+                android:textColor="@android:color/holo_blue_light"
+                android:textSize="44sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toEndOf="@id/imvTempMin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.25" />
+
+            <TextView
+                android:id="@+id/txvTempMax"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="22"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="44sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imvTempMin"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toEndOf="@id/imvTempMax"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.25" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/imvWear"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="fitStart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.6"
+            app:srcCompat="@drawable/icono_wardrobe" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
+
+<LinearLayout
+    android:id="@+id/lilMenu"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/lilBackground">
+
+
+    <ImageView
+        android:id="@+id/imvGarment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:paddingLeft="32dp"
+        android:paddingTop="8dp"
+        android:paddingRight="32dp"
+        app:srcCompat="@drawable/icono_compra" />
+
+    <ImageView
+        android:id="@+id/imvWash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:paddingLeft="48dp"
+        android:paddingTop="8dp"
+        android:paddingRight="48dp"
+        app:srcCompat="@drawable/icono_lavadora" />
+
+    <ImageView
+        android:id="@+id/imvWardrobe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:paddingLeft="32dp"
+        android:paddingTop="8dp"
+        android:paddingRight="32dp"
+        app:srcCompat="@drawable/icono_armario" />
+</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

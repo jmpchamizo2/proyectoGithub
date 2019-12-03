@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Wardrobe</string>
+    <string name="user_name">Nombre</string>
+    <string name="user">Usuario</string>
+    <string name="birthdate">Fecha de Nacimiento</string>
+    <string name="gender">Sexo</string>
+    <string name="country">Pais</string>
+    <string name="state">Ciudad</string>
+    <string name="city">Localidad</string>
+    <string name="pass">Contraseña</string>
+    <string name="passConfirm">Confirmar Contraseña</string>
+    <string name="email">Email</string>
+    <string name="garment_name">Nombre</string>
+    <string name="garment_type">Tipo</string>
+    <string name="description">Descripción</string>
+    <string name="color">Color</string>
+    <string name="tissue">Tejido</string>
+    <string name="temperature">Temperatura</string>
+    <string name="store">Marca</string>
+    <string name="combine">Combinación</string>
+    <string name="garment">Prenda</string>
+    <string name="outfit_name">Outfit</string>
+    <string name="cont">Siguiente</string>
+    <string name="male">Hombre</string>
+    <string name="female">Mujer</string>
+    <string name="other">Otro</string>
+    <string name="notAnswer">No responder</string>
+    <string name="newUSer">Nuevo usuario</string>
+    <string name="forgetPass">¿Has olvidado la contraseña?</string>
+
+    <string name="zipCode">Codigo Postal</string>
+</resources>
+

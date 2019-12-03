@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wardrobe</string>
+    <string name="user_name">Name</string>
+    <string name="user">User</string>
+    <string name="birthdate">Birth Date</string>
+    <string name="gender">Gender</string>
+    <string name="country">Country</string>
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="pass">Password</string>
+    <string name="passConfirm">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="garment_name">Name</string>
+    <string name="garment_type">Type</string>
+    <string name="description">Description</string>
+    <string name="color">Color</string>
+    <string name="tissue">Tissue</string>
+    <string name="temperature">Temperature</string>
+    <string name="store">Store</string>
+    <string name="combine">Combine</string>
+    <string name="garment">Garmen</string>
+    <string name="outfit_name">Outfit</string>
+    <string name="cont">Continue</string>
+    <string name="male">Man</string>
+    <string name="female">Woman</string>
+    <string name="other">Other</string>
+    <string name="notAnswer">Unanswered</string>
+    <string name="newUSer">New user</string>
+    <string name="forgetPass">Have you forgottem your password?</string>
+    <string name="zipCode">Zip Code</string>
+</resources>
