@@ -19,11 +19,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class GarmentActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+
+public class GarmentActivity extends AppCompatActivity implements MultiSpinner.MultiSpinnerListener {
 
     private ImageView imvGarmentHome;
-    private EditText edtNameGarment, edtType, edtDesc, edtColor, edtTissue, edtTemperature, edtBrandname, edtGarments;
+    private EditText edtNameGarment, edtType, edtDesc, edtColor, edtTissue, edtBrandname, edtGarments;
     private Button btnGarmentContinue;
+    private MultiSpinner multiSpinnerTemperature;
+
+    private List<String> temperatures = new ArrayList<String>();
+    private List<TemperaturesGarment> temperaturesGarment = new ArrayList<TemperaturesGarment>();
+
 
     private FirebaseAuth mAuth;
 
@@ -33,16 +44,26 @@ public class GarmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_garment);
         getSupportActionBar().hide();
 
+        temperatures.add("<0");
+        temperatures.add("0-5");
+        temperatures.add("5-10");
+        temperatures.add("10-15");
+        temperatures.add("15-20");
+        temperatures.add("20-25");
+        temperatures.add("25-30");
+        temperatures.add(">30");
+
         imvGarmentHome = findViewById(R.id.imvGarmentHome);
         edtColor = findViewById(R.id.edtColor);
         edtDesc = findViewById(R.id.edtDesc);
         edtNameGarment = findViewById(R.id.edtNameGarment);
         edtBrandname = findViewById(R.id.edtStore);
-        edtTemperature = findViewById(R.id.edtTemperature);
         edtTissue = findViewById(R.id.edtTissue);
         edtType = findViewById(R.id.edtType);
         edtGarments = findViewById(R.id.edtCombine);
         btnGarmentContinue = findViewById(R.id.btnGarment);
+        multiSpinnerTemperature = (MultiSpinner) findViewById(R.id.multispinnerTemperature);
+        multiSpinnerTemperature.setItems(temperatures, getString(R.string.select_temperature),  this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -82,11 +103,10 @@ public class GarmentActivity extends AppCompatActivity {
         String description = edtDesc.getText().toString();
         String color = edtColor.getText().toString();
         String tissue = edtTissue.getText().toString();
-        String temperature = edtTemperature.getText().toString();
+
         String brandname = edtBrandname.getText().toString();
-        Garment garment = new Garment("prueba", name, type, description, color, tissue, temperature, brandname);
+        Garment garment = new Garment("prueba", name, type, description, color, tissue, temperaturesGarment, brandname);
         garment.addUser(currentUser.getUid());
-        System.out.println(garment.getUsers() + "///////////////////////////////////");
         DatabaseReference mDataBaseGarmentsGarmentId = mDataBase.child("garments").child(garment.getId());
         mDataBaseGarmentsGarmentId.child("image").setValue(garment.getImage());
         mDataBaseGarmentsGarmentId.child("type").setValue(garment.getType());
@@ -124,4 +144,12 @@ public class GarmentActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemsSelected(boolean[] selected) {
+        for(int i = 0; i < selected.length; i++){
+            if(selected[i]){
+                temperaturesGarment.add(TemperaturesGarment.values()[i]);
+            }
+        }
+    }
 }

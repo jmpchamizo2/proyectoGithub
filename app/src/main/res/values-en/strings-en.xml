@@ -30,4 +30,5 @@
     <string name="forgetPass">Have you forgottem your password?</string>
     <string name="zipCode">Zip Code</string>
     <string name="image_garment_description">Garment image</string>
+    <string name="select_temperature">Select temperature</string>
 </resources>

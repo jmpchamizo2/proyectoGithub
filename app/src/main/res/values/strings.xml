@@ -29,5 +29,6 @@
     <string name="forgetPass">¿Has olvidado la contraseña?</string>
     <string name="zipCode">Codigo Postal</string>
     <string name="image_garment_description">Imagen de la prenda</string>
+    <string name="select_temperature">Selecciona temperatura</string>
 </resources>
 

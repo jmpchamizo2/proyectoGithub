@@ -13,13 +13,13 @@ public class Garment {
     private String description;
     private String color;
     private String tissue;
-    private String temperature;
+    private List<TemperaturesGarment> temperature;
     private String brandName;
     private List<String> garments;
     private List<String> users;
 
 
-    public Garment(String image, String name, String type, String description, String color, String tissue, String temperature, String brandName) {
+    public Garment(String image, String name, String type, String description, String color, String tissue, List<TemperaturesGarment> temperature, String brandName) {
         this.id = UUID.randomUUID().toString();;
         this.image = image;
         this.name = name;
@@ -85,13 +85,10 @@ public class Garment {
         this.tissue = tissue;
     }
 
-    public String getTemperature() {
+    public List<TemperaturesGarment> getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(String temperature) {
-        this.temperature = temperature;
-    }
 
     public String getBrandName() {
         return brandName;

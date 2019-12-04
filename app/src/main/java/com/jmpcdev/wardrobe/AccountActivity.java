@@ -39,7 +39,6 @@ public class AccountActivity extends AppCompatActivity {
     private Button btnUser;
     private ImageView imvUserHome;
 
-
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private static final String TAG = "AccountActivity";
@@ -68,6 +67,7 @@ public class AccountActivity extends AppCompatActivity {
         rdbMale = findViewById(R.id.rdbMale);
         rdbOther = findViewById(R.id.rdbOther);
         rdbUnans = findViewById(R.id.rdbNotAnswer);
+
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -100,6 +100,7 @@ public class AccountActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUserValues(currentUser);
+
 
     }
 
@@ -214,6 +215,5 @@ public class AccountActivity extends AppCompatActivity {
         }
 
     }
-
 
 }

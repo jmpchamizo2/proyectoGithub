@@ -76,21 +76,21 @@
             android:hint="@string/tissue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/edtTemperature"
+            app:layout_constraintBottom_toTopOf="@id/multispinnerTemperature"
             app:layout_constraintTop_toBottomOf="@id/edtColor" />
 
-        <EditText
-            android:id="@+id/edtTemperature"
+        <com.jmpcdev.wardrobe.MultiSpinner
+            android:id="@+id/multispinnerTemperature"
             android:layout_width="0dp"
             app:layout_constraintWidth_percent="0.7"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/temperature"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.1"
+            android:prompt="@string/temperature"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtStore"
-            app:layout_constraintTop_toBottomOf="@id/edtTissue" />
+            app:layout_constraintTop_toBottomOf="@id/edtTissue"/>
+
 
         <EditText
             android:id="@+id/edtStore"
@@ -102,7 +102,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtCombine"
-            app:layout_constraintTop_toBottomOf="@id/edtTemperature" />
+            app:layout_constraintTop_toBottomOf="@id/multispinnerTemperature" />
 
         <EditText
             android:id="@+id/edtCombine"
@@ -126,6 +126,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtCombine" />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
