@@ -14,7 +14,7 @@ public class User {
     private String state;
     private String city;
     private String zipCode;
-    private List<String> garments;
+    private List<Garment> garments;
 
     public User(){
         this.email = null;
@@ -25,7 +25,7 @@ public class User {
         this.state = null;
         this.city = null;
         this.zipCode = null;
-        garments = new ArrayList<String>();
+        garments = new ArrayList<Garment>();
     }
 
     public User(String email, String name, String birthDate, String gender, String country, String state, String city, String zipCode) {
@@ -38,7 +38,7 @@ public class User {
         this.state = state;
         this.city = city;
         this.zipCode = zipCode;
-        garments = new ArrayList<String>();
+        garments = new ArrayList<Garment>();
     }
 
     //public String getId() {
@@ -109,17 +109,18 @@ public class User {
         this.zipCode = zipCode;
     }
 
-    public List<String> getGarments() {
+    public List<Garment> getGarments() {
         return garments;
     }
 
-    public boolean addGarment(String garment){
+    public boolean addGarment(Garment garment){
         return garments.add(garment);
     }
 
-    public boolean removeGarment(String garment){
+    public boolean removeGarment(Garment garment){
         return garments.remove(garment);
     }
+
 
     public String toString(){
         return this.email + ", " + this.zipCode + ", " + this.gender + "=================================";

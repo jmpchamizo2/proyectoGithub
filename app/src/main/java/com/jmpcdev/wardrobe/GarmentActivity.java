@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 
 
@@ -105,7 +106,7 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
         String tissue = edtTissue.getText().toString();
 
         String brandname = edtBrandname.getText().toString();
-        Garment garment = new Garment("prueba", name, type, description, color, tissue, temperaturesGarment, brandname);
+        final Garment garment = new Garment("prueba", name, type, description, color, tissue, temperaturesGarment, brandname);
         garment.addUser(currentUser.getUid());
         DatabaseReference mDataBaseGarmentsGarmentId = mDataBase.child("garments").child(garment.getId());
         mDataBaseGarmentsGarmentId.child("image").setValue(garment.getImage());
@@ -116,6 +117,25 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
         mDataBaseGarmentsGarmentId.child("temperature").setValue(garment.getTemperature());
         mDataBaseGarmentsGarmentId.child("brandname").setValue(garment.getBrandName());
         mDataBaseGarmentsGarmentId.child("users").setValue(garment.getUsers());
+        FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).child("garments")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        List<Garment> garments = (List<Garment>) dataSnapshot.getValue();
+                        if(garments == null){
+                            garments = new ArrayList<>();
+                        }
+                        garments.add(garment);
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        FirebaseDatabase.getInstance().getReference().child("users")
+                                .child(currentUser.getUid()).child("garments").setValue(garments);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
     }
 

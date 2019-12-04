@@ -23,7 +23,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imvGarment"
+                android:id="@+id/imvGarmentCard"
                 android:layout_width="0dp"
                 android:layout_height="130dp"
                 android:src="@drawable/garrment"

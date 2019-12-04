@@ -18,6 +18,8 @@ public class Garment {
     private List<String> garments;
     private List<String> users;
 
+    public Garment(){}
+
 
     public Garment(String image, String name, String type, String description, String color, String tissue, List<TemperaturesGarment> temperature, String brandName) {
         this.id = UUID.randomUUID().toString();;
