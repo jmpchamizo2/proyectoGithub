@@ -149,7 +149,7 @@ public class AccountActivity extends AppCompatActivity {
     private void updateUserValues(FirebaseUser user){
         if (user != null) {
             FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid())
-                    .addValueEventListener(new ValueEventListener() {
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             User innerUSer = dataSnapshot.getValue(User.class);

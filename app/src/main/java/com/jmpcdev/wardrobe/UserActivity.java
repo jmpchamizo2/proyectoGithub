@@ -122,7 +122,7 @@ public class UserActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
             FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid())
-                    .addValueEventListener(new ValueEventListener() {
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -180,15 +180,6 @@ public class UserActivity extends AppCompatActivity {
         DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mDataBaseUsersUserID = mDataBase.child("users").child(currentUser.getUid());
         mDataBaseUsersUserID.child("email").setValue(currentUser.getEmail());
-        /**
-        mDataBaseUsersUserID.child("name").setValue(null);
-        mDataBaseUsersUserID.child("birthDate").setValue(null);
-        mDataBaseUsersUserID.child("gender").setValue(null);
-        mDataBaseUsersUserID.child("country").setValue(null);
-        mDataBaseUsersUserID.child("state").setValue(null);
-        mDataBaseUsersUserID.child("city").setValue(null);
-        mDataBaseUsersUserID.child("zipCode").setValue(null);
-        **/
     }
 
 

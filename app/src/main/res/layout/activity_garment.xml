@@ -28,20 +28,21 @@
             android:hint="@string/garment_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/edtType"
+            app:layout_constraintBottom_toTopOf="@id/spinnerType"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/edtType"
+
+        <Spinner
+            android:id="@+id/spinnerType"
             android:layout_width="0dp"
-            app:layout_constraintWidth_percent="0.7"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="@string/garment_type"
+            app:layout_constraintWidth_percent="0.76"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.1"
+            style="?android:attr/spinnerItemStyle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtDesc"
-            app:layout_constraintTop_toBottomOf="@id/edtNameGarment" />
+            app:layout_constraintTop_toBottomOf="@id/edtNameGarment"/>
 
         <EditText
             android:id="@+id/edtDesc"
@@ -53,7 +54,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtColor"
-            app:layout_constraintTop_toBottomOf="@id/edtType" />
+            app:layout_constraintTop_toBottomOf="@id/spinnerType" />
 
         <EditText
             android:id="@+id/edtColor"
@@ -82,7 +83,7 @@
         <com.jmpcdev.wardrobe.MultiSpinner
             android:id="@+id/multispinnerTemperature"
             android:layout_width="0dp"
-            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintWidth_percent="0.71"
             android:layout_height="0dp"
             app:layout_constraintHeight_percent="0.1"
             android:prompt="@string/temperature"
@@ -101,16 +102,16 @@
             android:hint="@string/store"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/edtCombine"
+            app:layout_constraintBottom_toTopOf="@id/btnCombine"
             app:layout_constraintTop_toBottomOf="@id/multispinnerTemperature" />
 
-        <EditText
-            android:id="@+id/edtCombine"
+        <Button
+            android:id="@+id/btnCombine"
             android:layout_width="0dp"
             app:layout_constraintWidth_percent="0.7"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="@string/combine"
+            android:text="@string/combine"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btnGarment"
@@ -124,8 +125,9 @@
             android:text="@string/cont"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtCombine" />
+            app:layout_constraintBottom_toBottomOf="@id/spinnerType"
+            app:layout_constraintTop_toBottomOf="@id/btnCombine" />
+
 
 
 

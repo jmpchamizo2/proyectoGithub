@@ -1,5 +1,7 @@
 package com.jmpcdev.wardrobe;
 
+import android.widget.Spinner;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +16,7 @@ public class User {
     private String state;
     private String city;
     private String zipCode;
-    private List<Garment> garments;
+    private List<String> garments;
 
     public User(){
         this.email = null;
@@ -25,7 +27,7 @@ public class User {
         this.state = null;
         this.city = null;
         this.zipCode = null;
-        garments = new ArrayList<Garment>();
+        garments = new ArrayList<String>();
     }
 
     public User(String email, String name, String birthDate, String gender, String country, String state, String city, String zipCode) {
@@ -38,7 +40,7 @@ public class User {
         this.state = state;
         this.city = city;
         this.zipCode = zipCode;
-        garments = new ArrayList<Garment>();
+        garments = new ArrayList<String>();
     }
 
     //public String getId() {
@@ -109,15 +111,15 @@ public class User {
         this.zipCode = zipCode;
     }
 
-    public List<Garment> getGarments() {
+    public List<String> getGarments() {
         return garments;
     }
 
-    public boolean addGarment(Garment garment){
+    public boolean addGarment(String garment){
         return garments.add(garment);
     }
 
-    public boolean removeGarment(Garment garment){
+    public boolean removeGarment(String garment){
         return garments.remove(garment);
     }
 

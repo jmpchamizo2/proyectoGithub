@@ -17,9 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WashActivity extends AppCompatActivity {
-
-
+public class CombineActivity extends AppCompatActivity {
     private RecyclerView mRecycler;
     private RecyclerView.Adapter mAdapter;
 
@@ -28,15 +26,14 @@ public class WashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wash);
+        setContentView(R.layout.activity_combine);
 
         mAuth = FirebaseAuth.getInstance();
 
-        mRecycler = findViewById(R.id.recycler_wash);
+        mRecycler = findViewById(R.id.recycler_wardrobe);
         mRecycler.setHasFixedSize(true);
 
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-
 
     }
 
@@ -53,24 +50,43 @@ public class WashActivity extends AppCompatActivity {
             FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).child("garments")
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                Garment garment = ds.getValue(Garment.class);
-                                if (garment.isWashing()) {
-                                    garments.add(garment);
-                                }
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final List<String> garmetnsId = (ArrayList<String>) dataSnapshot.getValue();
+                            final List<Garment> garments = new ArrayList<>();
+                            for (String id : garmetnsId) {
+                                FirebaseUser currentUser = mAuth.getCurrentUser();
+                                FirebaseDatabase.getInstance().getReference().child("garments").child(id)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                Garment garment = dataSnapshot.getValue(Garment.class);
+                                                garments.add(garment);
+                                                if (garments.size() == garmetnsId.size()) {
+                                                    mAdapter = new GarmentAdapter(garments);
+                                                    mRecycler.setAdapter(mAdapter);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
 
                             }
-                            mAdapter = new GarmentAdapter(garments);
-                            mRecycler.setAdapter(mAdapter);
+
+
                         }
+
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
-
                     });
+
         }
     }
+
 }

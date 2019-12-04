@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GarmentAdapter extends RecyclerView.Adapter<GarmentAdapter.ViewHolder> {
 
-    private List<Garment> garments = new ArrayList<>();
+    private List<Garment> garments;
 
     public GarmentAdapter(List<Garment> garments) {
         this.garments = garments;
@@ -29,10 +29,9 @@ public class GarmentAdapter extends RecyclerView.Adapter<GarmentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        System.out.println(garments.get(position).getName() + "///////////////////////////////");
         holder.txvName.setText(garments.get(position).getName());
         holder.txvDescript.setText(garments.get(position).getDescription());
-        holder.txvDescript.setText(garments.get(position).getType());
+        holder.txvType.setText(garments.get(position).getType());
     }
 
     @Override

@@ -31,4 +31,18 @@
     <string name="zipCode">Zip Code</string>
     <string name="image_garment_description">Garment image</string>
     <string name="select_temperature">Select temperature</string>
+    <string name="select_type">Select type</string>
+    <string name="sweater">Sweater</string>
+    <string name="shirt">Shirt</string>
+    <string name="tshirt">T-Shirt</string>
+    <string name="pants">Pants</string>
+    <string name="jeans">Jeans</string>
+    <string name="skirt">Skirt</string>
+    <string name="coat">Coat</string>
+    <string name="hat">Hat</string>
+    <string name="shoes">Shoes</string>
+    <string name="sports">Sports</string>
+    <string name="tracksuit">Tracksuit</string>
+    <string name="swimsuit">Swimsuit</string>
+    <string name="dress">Dress</string>
 </resources>

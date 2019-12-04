@@ -54,23 +54,44 @@ public class WardrobeActivity extends AppCompatActivity {
         final List<Garment> garments = new ArrayList<>();
         if (currentUser != null) {
             FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).child("garments")
-                    .addValueEventListener(new ValueEventListener() {
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot ds : dataSnapshot.getChildren()){
-                                Garment garment = ds.getValue(Garment.class);
-                                garments.add(garment);
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final List<String> garmetnsId = (ArrayList<String>) dataSnapshot.getValue();
+                            final List<Garment> garments = new ArrayList<>();
+                            for(String id : garmetnsId){
+                                FirebaseUser currentUser = mAuth.getCurrentUser();
+                                FirebaseDatabase.getInstance().getReference().child("garments").child(id)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        Garment garment = dataSnapshot.getValue(Garment.class);
+                                        garments.add(garment);
+                                        if(garments.size() == garmetnsId.size()){
+                                            mAdapter = new GarmentAdapter(garments);
+                                            mRecycler.setAdapter(mAdapter);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
                             }
-                            mAdapter = new GarmentAdapter(garments);
-                            mRecycler.setAdapter(mAdapter);
-                            }
+
+
+                        }
+
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
-
                     });
+
         }
     }
 

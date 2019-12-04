@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import androidx.appcompat.widget.AppCompatSpinner;
 import java.util.List;
@@ -101,6 +103,7 @@ public class MultiSpinner extends AppCompatSpinner implements
 
     public interface MultiSpinnerListener {
         public void onItemsSelected(boolean[] selected);
+
     }
 
 }
