@@ -128,14 +128,18 @@ public class AccountActivity extends AppCompatActivity {
     private void writeUser(User user){
         FirebaseUser currentUser = mAuth.getCurrentUser();
         DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mDataBaseUsersUserEmail = mDataBase.child("users").child(currentUser.getUid());
-        mDataBaseUsersUserEmail.child("name").setValue(user.getName());
-        mDataBaseUsersUserEmail.child("birthDate").setValue(user.getBirthDate());
-        mDataBaseUsersUserEmail.child("gender").setValue(user.getGender());
-        mDataBaseUsersUserEmail.child("country").setValue(user.getCountry());
-        mDataBaseUsersUserEmail.child("state").setValue(user.getState());
-        mDataBaseUsersUserEmail.child("city").setValue(user.getCity());
-        mDataBaseUsersUserEmail.child("zipCode").setValue(user.getZipCode());
+        DatabaseReference mDataBaseUsersUserID = mDataBase.child("users").child(currentUser.getUid());
+        if(!(user.getEmail().equals(currentUser.getEmail()))){
+            currentUser.updateEmail(user.getEmail());
+            mDataBaseUsersUserID.child("email").setValue(currentUser.getEmail());
+        }
+        mDataBaseUsersUserID.child("name").setValue(user.getName());
+        mDataBaseUsersUserID.child("birthDate").setValue(user.getBirthDate());
+        mDataBaseUsersUserID.child("gender").setValue(user.getGender());
+        mDataBaseUsersUserID.child("country").setValue(user.getCountry());
+        mDataBaseUsersUserID.child("state").setValue(user.getState());
+        mDataBaseUsersUserID.child("city").setValue(user.getCity());
+        mDataBaseUsersUserID.child("zipCode").setValue(user.getZipCode());
     }
 
 
@@ -148,6 +152,7 @@ public class AccountActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             User innerUSer = dataSnapshot.getValue(User.class);
+                            System.out.println(innerUSer);
                             completeEdtUser(innerUSer);
                         }
 

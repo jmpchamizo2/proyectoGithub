@@ -29,4 +29,5 @@
     <string name="newUSer">New user</string>
     <string name="forgetPass">Have you forgottem your password?</string>
     <string name="zipCode">Zip Code</string>
+    <string name="image_garment_description">Garment image</string>
 </resources>

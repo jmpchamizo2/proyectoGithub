@@ -38,12 +38,12 @@ public class UserActivity extends AppCompatActivity {
     private EditText edtEmail, edtPass, edtPass2;
     private Button btnUser;
 
-    private DatabaseReference mDataBase;
+
     private FirebaseAuth mAuth;
 
-    private String idToken = null;
 
-    User user = new User();
+
+
 
     private TextWatcher tw = new TextWatcher() {
         @Override
@@ -68,6 +68,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        getSupportActionBar().hide();
 
         edtEmail = findViewById(R.id.edtNewUser);
         edtPass = findViewById(R.id.edtNewUserPass);
@@ -76,6 +77,8 @@ public class UserActivity extends AppCompatActivity {
         //FirebaseAuth.getInstance().signOut();
         mAuth = FirebaseAuth.getInstance();
 
+        edtPass.addTextChangedListener(tw);
+        edtPass2.addTextChangedListener(tw);
 
     }
 
@@ -85,9 +88,6 @@ public class UserActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
-
-        edtPass.addTextChangedListener(tw);
-        edtPass2.addTextChangedListener(tw);
     }
 
 
@@ -101,15 +101,9 @@ public class UserActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser currentUser = mAuth.getCurrentUser();
-                            if (createUser(currentUser)){
-                                Log.w(TAG, "createUser:success", task.getException());
-                                updateUI(currentUser);
-                            } else {
-                                Toast.makeText(UserActivity.this, "Create user failed.",
-                                        Toast.LENGTH_SHORT).show();
-                                updateUI(null);
-                            }
-
+                            createUser(currentUser);
+                            Log.w(TAG, "createUser:success", task.getException());
+                            updateUI(currentUser);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -125,7 +119,6 @@ public class UserActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
-
             FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid())
                     .addValueEventListener(new ValueEventListener() {
                         @Override
@@ -150,8 +143,6 @@ public class UserActivity extends AppCompatActivity {
 
                         }
                     });
-
-
         }
     }
 
@@ -183,60 +174,19 @@ public class UserActivity extends AppCompatActivity {
         }
     }
 
-    private boolean createUser(FirebaseUser currentUser){
-        final boolean[] resultado = {true};
+    private void createUser(FirebaseUser currentUser){
         DatabaseReference mDataBase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mDataBaseUsersUserEmail = mDataBase.child("users").child(currentUser.getUid());
-        mDataBaseUsersUserEmail.child("email").setValue(currentUser.getEmail()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("name").setValue(null).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("birthDate").setValue(null).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("gender").setValue(null).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("country").setValue(null).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("state").setValue(null).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("city").setValue(null).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-        mDataBaseUsersUserEmail.child("zipCode").setValue(null).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                resultado[0] = false;
-            }
-        });
-
-        return resultado[0];
+        DatabaseReference mDataBaseUsersUserID = mDataBase.child("users").child(currentUser.getUid());
+        mDataBaseUsersUserID.child("email").setValue(currentUser.getEmail());
+        /**
+        mDataBaseUsersUserID.child("name").setValue(null);
+        mDataBaseUsersUserID.child("birthDate").setValue(null);
+        mDataBaseUsersUserID.child("gender").setValue(null);
+        mDataBaseUsersUserID.child("country").setValue(null);
+        mDataBaseUsersUserID.child("state").setValue(null);
+        mDataBaseUsersUserID.child("city").setValue(null);
+        mDataBaseUsersUserID.child("zipCode").setValue(null);
+        **/
     }
 
 

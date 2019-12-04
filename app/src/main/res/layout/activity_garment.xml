@@ -12,108 +12,120 @@
         android:id="@+id/imvGarmentHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/icono_wardrobe" />
+        app:srcCompat="@drawable/icono_wardrobe"
+        android:contentDescription="@string/image_garment_description"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content" >
 
         <EditText
             android:id="@+id/edtNameGarment"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/garment_name"
+            android:hint="@string/garment_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtType"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/edtType"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/garment_type"
+            android:hint="@string/garment_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtDesc"
-            app:layout_constraintTop_toBottomOf="@id/edtNameGarment"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintTop_toBottomOf="@id/edtNameGarment" />
 
         <EditText
             android:id="@+id/edtDesc"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/description"
+            android:hint="@string/description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtColor"
-            app:layout_constraintTop_toBottomOf="@id/edtType"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintTop_toBottomOf="@id/edtType" />
 
         <EditText
             android:id="@+id/edtColor"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/color"
+            android:hint="@string/color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtTissue"
-            app:layout_constraintTop_toBottomOf="@id/edtDesc"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintTop_toBottomOf="@id/edtDesc" />
 
         <EditText
             android:id="@+id/edtTissue"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/tissue"
+            android:hint="@string/tissue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtTemperature"
-            app:layout_constraintTop_toBottomOf="@id/edtColor"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintTop_toBottomOf="@id/edtColor" />
 
         <EditText
             android:id="@+id/edtTemperature"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/temperature"
+            android:hint="@string/temperature"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtStore"
-            app:layout_constraintTop_toBottomOf="@id/edtTissue"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintTop_toBottomOf="@id/edtTissue" />
 
         <EditText
             android:id="@+id/edtStore"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/store"
+            android:hint="@string/store"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/edtCombine"
-            app:layout_constraintTop_toBottomOf="@id/edtTemperature"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintTop_toBottomOf="@id/edtTemperature" />
 
         <EditText
             android:id="@+id/edtCombine"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/combine"
+            android:hint="@string/combine"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btnGarment"
-            app:layout_constraintTop_toBottomOf="@id/edtStore"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintTop_toBottomOf="@id/edtStore" />
 
         <Button
             android:id="@+id/btnGarment"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
             android:layout_height="wrap_content"
             android:text="@string/cont"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtCombine"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintTop_toBottomOf="@id/edtCombine" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

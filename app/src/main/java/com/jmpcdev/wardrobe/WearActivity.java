@@ -19,6 +19,7 @@ public class WearActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wear);
+        getSupportActionBar().hide();
 
         imvWearHome = findViewById(R.id.imvWearHome);
         imvHead = findViewById(R.id.imvHead);

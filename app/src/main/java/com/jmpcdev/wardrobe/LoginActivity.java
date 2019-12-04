@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
 
         txvNewUser = findViewById(R.id.txvNewUser);
         txvForgotPass = findViewById(R.id.txvForgotPass);
@@ -117,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             FirebaseUser currentUser = mAuth.getCurrentUser();
+                            System.out.println(currentUser.getEmail());
                             User inneruser = dataSnapshot.getValue(User.class);
 
                             if(inneruser.getEmail().equals(currentUser.getEmail())){
@@ -143,8 +145,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private boolean isCompleteUser(User user){
-        return (user.getName() != null && user.getBirthDate() != null && user.getCity() != null &&
-                user.getCountry() != null && user.getGender() != null && user.getState() != null && user.getZipCode() != null);
+        return (user.getName() != null && !user.getName().equals("") && user.getBirthDate() != null
+                && !user.getBirthDate().equals("") && user.getCity() != null &&
+                !user.getCity().equals("") && user.getCountry() != null && !user.getCountry().equals("")
+                && user.getGender() != null && user.getState() != null && !user.getState().equals("")
+                && user.getZipCode() != null && !user.getZipCode().equals(""));
     }
 
 }
