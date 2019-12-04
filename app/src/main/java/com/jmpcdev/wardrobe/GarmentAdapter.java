@@ -8,12 +8,13 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.HashMap;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class GarmentAdapter extends RecyclerView.Adapter<GarmentAdapter.ViewHolder> {
 
-    private List<Garment> garments;
+    private List<Garment> garments = new ArrayList<>();
 
     public GarmentAdapter(List<Garment> garments) {
         this.garments = garments;
@@ -28,7 +29,7 @@ public class GarmentAdapter extends RecyclerView.Adapter<GarmentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        System.out.println(garments.get(position).getName() + "///////////////////////////////");
         holder.txvName.setText(garments.get(position).getName());
         holder.txvDescript.setText(garments.get(position).getDescription());
         holder.txvDescript.setText(garments.get(position).getType());

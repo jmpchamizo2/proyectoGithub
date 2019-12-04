@@ -48,6 +48,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, WardrobeActivity.class));
             }
         });
+
+        imvWash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, WashActivity.class));
+            }
+        });
+
+
     }
 
 

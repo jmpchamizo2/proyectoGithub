@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,10 +15,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
-public class WardrobeActivity extends AppCompatActivity {
+public class WashActivity extends AppCompatActivity {
+
 
     private RecyclerView mRecycler;
     private RecyclerView.Adapter mAdapter;
@@ -29,16 +28,14 @@ public class WardrobeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wardrobe);
+        setContentView(R.layout.activity_wash);
 
         mAuth = FirebaseAuth.getInstance();
 
-        mRecycler = findViewById(R.id.recycler_wardrobe);
+        mRecycler = findViewById(R.id.recycler_wash);
         mRecycler.setHasFixedSize(true);
 
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-
-
 
 
     }
@@ -57,13 +54,16 @@ public class WardrobeActivity extends AppCompatActivity {
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 Garment garment = ds.getValue(Garment.class);
-                                garments.add(garment);
+                                if (garment.isWashing()) {
+                                    garments.add(garment);
+                                }
+
                             }
                             mAdapter = new GarmentAdapter(garments);
                             mRecycler.setAdapter(mAdapter);
-                            }
+                        }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -73,7 +73,4 @@ public class WardrobeActivity extends AppCompatActivity {
                     });
         }
     }
-
-
-
 }

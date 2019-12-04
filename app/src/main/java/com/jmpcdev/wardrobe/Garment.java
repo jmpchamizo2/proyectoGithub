@@ -17,6 +17,7 @@ public class Garment {
     private String brandName;
     private List<String> garments;
     private List<String> users;
+    private boolean washing;
 
     public Garment(){}
 
@@ -33,6 +34,7 @@ public class Garment {
         this.brandName = brandName;
         garments = new ArrayList<String>();
         users = new ArrayList<String>();
+        washing = false;
     }
 
     public String getId(){
@@ -125,4 +127,15 @@ public class Garment {
         return users;
     }
 
+    public boolean isWashing() {
+        return washing;
+    }
+
+    public void toWardrobe(){
+        washing = false;
+    }
+
+    public void toWahs(){
+        washing = true;
+    }
 }

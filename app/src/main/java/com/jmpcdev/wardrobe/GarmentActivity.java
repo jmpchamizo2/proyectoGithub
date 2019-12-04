@@ -159,7 +159,7 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
             */
 
         } else {
-            startActivity(new Intent(GarmentActivity.this, LoginActivity.class));
+            //startActivity(new Intent(GarmentActivity.this, LoginActivity.class));
         }
     }
 
