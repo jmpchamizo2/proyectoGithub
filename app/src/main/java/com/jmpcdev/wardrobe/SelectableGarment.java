@@ -1,5 +1,7 @@
 package com.jmpcdev.wardrobe;
 
+import androidx.annotation.Nullable;
+
 public class SelectableGarment extends Garment {
     private boolean isSelected = false;
 
@@ -16,5 +18,10 @@ public class SelectableGarment extends Garment {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+
+    public boolean equals(@Nullable SelectableGarment obj) {
+        return this.getId() == obj.getId();
     }
 }

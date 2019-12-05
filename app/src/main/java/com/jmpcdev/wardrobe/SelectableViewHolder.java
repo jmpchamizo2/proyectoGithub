@@ -1,53 +1,60 @@
 package com.jmpcdev.wardrobe;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.CharArrayReader;
+import java.util.List;
 
 public class SelectableViewHolder extends RecyclerView.ViewHolder {
 
-    public static final int MULTI_SELECTION = 2;
-    public static final int SINGLE_SELECTION = 1;
-    CheckedTextView textView;
+
+    TextView txvSelectableGarmentName, txvSelectableGarmentDescription, txvSelectableGarmentType;
+    ImageView imvSelectableGarmentImage;
+    CardView cardView;
     SelectableGarment selectableGarment;
-    OnItemSelectedListener itemSelectedListener;
+    List<SelectableGarment> selectableGarments;
 
 
-    public SelectableViewHolder(View view, OnItemSelectedListener listener) {
+
+    public SelectableViewHolder(View view) {
         super(view);
-        itemSelectedListener = listener;
-        textView = (CheckedTextView) view.findViewById(R.id.checkedTextView);
-        textView.setOnClickListener(new View.OnClickListener() {
+        txvSelectableGarmentDescription = view.findViewById(R.id.txvSelectableDescGarment);
+        txvSelectableGarmentName = view.findViewById(R.id.txvSelectableNameGarment);
+        txvSelectableGarmentType = view.findViewById(R.id.txvSelectableTypeGarment);
+        cardView = (CardView) view.findViewById(R.id.cdvSelectableGarment);
+        cardView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-
-                if (selectableGarment.isSelected() && getItemViewType() == MULTI_SELECTION) {
-                    setChecked(false);
+            public void onClick(View v) {
+                System.out.println("Entramos//////////////////////////////////");
+                switchView(v);
+                if(v.isActivated()){
+                    v.setBackgroundColor(Color.GRAY);
                 } else {
-                    setChecked(true);
+                    v.setBackgroundColor(Color.WHITE);
                 }
-                itemSelectedListener.onItemSelected(selectableGarment);
-
             }
         });
+
+
     }
 
-    public void setChecked(boolean value) {
-        if (value) {
-            textView.setBackgroundColor(Color.LTGRAY);
-        } else {
-            textView.setBackground(null);
-        }
-        selectableGarment.setSelected(value);
-        textView.setChecked(value);
+
+
+    public void switchView(View view){
+        view.setActivated(!view.isActivated());
+        selectableGarment.setSelected(!selectableGarment.isSelected());
+        selectableGarments.set(selectableGarments.indexOf(selectableGarment), selectableGarment);
+
     }
 
-    public interface OnItemSelectedListener {
-
-        void onItemSelected(SelectableGarment selectableGarment);
-    }
 
 }

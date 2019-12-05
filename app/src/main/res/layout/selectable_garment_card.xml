@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cdvGarment"
+        android:id="@+id/cdvSelectableGarment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="4dp"
@@ -19,47 +19,47 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imvGarmentCard"
+                android:id="@+id/imvSelectableGarmentCard"
                 android:layout_width="0dp"
                 android:layout_height="130dp"
                 android:src="@drawable/garrment"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/txvNameGarment"
+                app:layout_constraintEnd_toStartOf="@id/txvSelectableNameGarment"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.35" />
 
             <TextView
-                android:id="@+id/txvNameGarment"
+                android:id="@+id/txvSelectableNameGarment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="nombre"
-                app:layout_constraintBottom_toTopOf="@id/txvDescGarment"
+                app:layout_constraintBottom_toTopOf="@id/txvSelectableDescGarment"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imvGarmentCard"
+                app:layout_constraintStart_toEndOf="@id/imvSelectableGarmentCard"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.5" />
 
             <TextView
-                android:id="@+id/txvDescGarment"
+                android:id="@+id/txvSelectableDescGarment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Descripción"
-                app:layout_constraintBottom_toTopOf="@id/txvTypeGarment"
+                app:layout_constraintBottom_toTopOf="@id/txvSelectableTypeGarment"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imvGarmentCard"
-                app:layout_constraintTop_toBottomOf="@id/txvNameGarment"
+                app:layout_constraintStart_toEndOf="@id/imvSelectableGarmentCard"
+                app:layout_constraintTop_toBottomOf="@id/txvSelectableNameGarment"
                 app:layout_constraintWidth_percent="0.5" />
 
             <TextView
-                android:id="@+id/txvTypeGarment"
+                android:id="@+id/txvSelectableTypeGarment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Tipo"
                 app:layout_constraintBottom_toBottomOf="@id/checkedTextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imvGarmentCard"
-                app:layout_constraintTop_toBottomOf="@id/txvDescGarment"
+                app:layout_constraintStart_toEndOf="@id/imvSelectableGarmentCard"
+                app:layout_constraintTop_toBottomOf="@id/txvSelectableDescGarment"
                 app:layout_constraintWidth_percent="0.5" />
 
             <CheckedTextView
@@ -68,9 +68,9 @@
                 android:layout_height="wrap_content"
                 android:text="CheckedTextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imvGarmentCard"
+                app:layout_constraintStart_toEndOf="@id/imvSelectableGarmentCard"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txvTypeGarment"
+                app:layout_constraintTop_toBottomOf="@id/txvSelectableTypeGarment"
                 app:layout_constraintWidth_percent="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -91,10 +91,10 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
 
 
 
-
-        ArrayAdapter<String> adapater = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, types);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.types, R.layout.custom_spinner_items);
+        //ArrayAdapter<String> adapater = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, types);
         spinnerType.setPrompt(getString(R.string.select_type));
-        spinnerType.setAdapter(adapater);
+        spinnerType.setAdapter(adapter);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -119,6 +119,19 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
                 startActivity(new Intent(GarmentActivity.this, CombineActivity.class));
             }
         });
+
+
+        Bundle data = this.getIntent().getExtras();
+        if (data != null){
+            ArrayList<String> ids  = data.getStringArrayList("ids");
+            String s = "";
+            for(String id : ids){
+                s += id + ", ";
+            }
+            btnCombine.setText(s.substring(0,s.length()-2));
+        }
+
+
     }
 
     @Override

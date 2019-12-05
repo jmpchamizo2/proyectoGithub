@@ -8,9 +8,11 @@ import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,9 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CombineActivity extends AppCompatActivity implements SelectableViewHolder.OnItemSelectedListener {
+public class CombineActivity extends AppCompatActivity{
     private RecyclerView mRecycler;
     private RecyclerView.Adapter mAdapter;
+
+    private FloatingActionButton boton;
 
     private FirebaseAuth mAuth;
 
@@ -44,8 +48,15 @@ public class CombineActivity extends AppCompatActivity implements SelectableView
 
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
+        boton = findViewById(R.id.floatingActionButton3);
 
 
+        boton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
 
@@ -66,7 +77,7 @@ public class CombineActivity extends AppCompatActivity implements SelectableView
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             final List<String> garmetnsId = (ArrayList<String>) dataSnapshot.getValue();
-                            final List<Garment> garments = new ArrayList<>();
+                            //final List<Garment> garments = new ArrayList<>();
 
                             final List<SelectableGarment> selectableGarments = new ArrayList<>();
 
@@ -77,16 +88,32 @@ public class CombineActivity extends AppCompatActivity implements SelectableView
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 Garment garment = dataSnapshot.getValue(Garment.class);
-                                                garments.add(garment);
-
-                                                SelectableGarment selectableGarment = new SelectableGarment(garment, false);
+                                                final SelectableGarment selectableGarment = new SelectableGarment(garment, false);
+                                                //garments.add(garment);
                                                 selectableGarments.add(selectableGarment);
-
-                                                if (garments.size() == garmetnsId.size()) {
-                                                    mAdapter = new GarmentAdapter(garments);
-                                                    //mRecycler.setAdapter(mAdapter);
-                                                    adapter = new SelectableGarmentAdapter(CombineActivity.this, selectableGarments,false);
+                                                if (selectableGarments.size() == garmetnsId.size()) {
+                                                    adapter = new SelectableGarmentAdapter(selectableGarments);
                                                     mRecycler.setAdapter(adapter);
+                                                    boton.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                           ArrayList<String> ids = new ArrayList<>();
+                                                           ArrayList<String> names = new ArrayList<>();
+                                                           Intent i = new Intent(CombineActivity.this, GarmentActivity.class);
+                                                           for(SelectableGarment s : selectableGarments){
+                                                               if(s.isSelected()){
+                                                                   ids.add(s.getId());
+                                                                   names.add(s.getName());
+                                                               }
+                                                           }
+                                                            if (ids.size() > 0) {
+                                                                i.putStringArrayListExtra("ids", ids);
+                                                                i.putStringArrayListExtra("names", names);
+                                                            }
+
+                                                           startActivity(i);
+                                                        }
+                                                    });
                                                 }
                                             }
 
@@ -110,11 +137,6 @@ public class CombineActivity extends AppCompatActivity implements SelectableView
         }
     }
 
-    @Override
-    public void onItemSelected(SelectableGarment selectableGarment) {
-        List<SelectableGarment> selectableGarments = adapter.getSelectedItems();
-        Snackbar.make(mRecycler,"Selected item is "+ selectableGarment.getName()+
-                ", Totally  selectem item count is "+ selectableGarments.size(),Snackbar.LENGTH_LONG).show();
-    }
+
 }
 

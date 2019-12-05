@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="temperatures">
+       <!-- <item>"<0"</item> -->
+        <item>"0-5"</item>
+        <item>"5-10</item>
+        <item>"10-15</item>
+        <item>"20-25</item>
+        <item>"25-30</item>
+        <item>">30"</item>
+    </string-array>
+    <string-array name="types">
+        <item>@string/hat</item>
+        <item>@string/sweater</item>
+        <item>@string/shirt</item>
+        <item>@string/tshirt</item>
+        <item>@string/pants</item>
+        <item>@string/jeans</item>
+        <item>@string/skirt</item>
+        <item>@string/dress</item>
+        <item>@string/tracksuit</item>
+        <item>@string/shoes</item>
+        <item>@string/sports</item>
+        <item>@string/coat</item>
+        <item>@string/swimsuit</item>
+    </string-array>
+</resources>
