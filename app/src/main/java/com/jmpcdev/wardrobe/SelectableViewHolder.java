@@ -34,9 +34,8 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Entramos//////////////////////////////////");
                 switchView(v);
-                if(v.isActivated()){
+                if(selectableGarment.isSelected()){
                     v.setBackgroundColor(Color.GRAY);
                 } else {
                     v.setBackgroundColor(Color.WHITE);
@@ -44,16 +43,23 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-
     }
 
 
 
-    public void switchView(View view){
+    private void switchView(View view){
         view.setActivated(!view.isActivated());
         selectableGarment.setSelected(!selectableGarment.isSelected());
         selectableGarments.set(selectableGarments.indexOf(selectableGarment), selectableGarment);
+        for (SelectableGarment s : selectableGarments){
+            System.out.println(s.isSelected() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
+    }
 
+    public void checkCardView(boolean setBackground){
+        if(setBackground){
+            cardView.setBackgroundColor(Color.GRAY);
+        }
     }
 
 

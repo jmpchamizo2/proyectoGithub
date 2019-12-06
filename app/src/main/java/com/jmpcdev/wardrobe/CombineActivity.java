@@ -28,12 +28,14 @@ public class CombineActivity extends AppCompatActivity{
     private RecyclerView mRecycler;
     private RecyclerView.Adapter mAdapter;
 
-    private FloatingActionButton boton;
+    private FloatingActionButton btnUpdateGarmentCombination;
 
     private FirebaseAuth mAuth;
+    private ArrayList<String> idsSelected;
 
 
     SelectableGarmentAdapter adapter;
+
 
 
     @Override
@@ -48,20 +50,13 @@ public class CombineActivity extends AppCompatActivity{
 
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        boton = findViewById(R.id.floatingActionButton3);
+        btnUpdateGarmentCombination = findViewById(R.id.floatingActionButton3);
 
-
-        boton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
+        idsSelected = updateIdsSelected();
 
 
     }
+
 
     @Override
     protected void onStart() {
@@ -76,55 +71,7 @@ public class CombineActivity extends AppCompatActivity{
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            final List<String> garmetnsId = (ArrayList<String>) dataSnapshot.getValue();
-                            //final List<Garment> garments = new ArrayList<>();
-
-                            final List<SelectableGarment> selectableGarments = new ArrayList<>();
-
-
-                            for (String id : garmetnsId) {
-                                FirebaseDatabase.getInstance().getReference().child("garments").child(id)
-                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                Garment garment = dataSnapshot.getValue(Garment.class);
-                                                final SelectableGarment selectableGarment = new SelectableGarment(garment, false);
-                                                //garments.add(garment);
-                                                selectableGarments.add(selectableGarment);
-                                                if (selectableGarments.size() == garmetnsId.size()) {
-                                                    adapter = new SelectableGarmentAdapter(selectableGarments);
-                                                    mRecycler.setAdapter(adapter);
-                                                    boton.setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View v) {
-                                                           ArrayList<String> ids = new ArrayList<>();
-                                                           ArrayList<String> names = new ArrayList<>();
-                                                           Intent i = new Intent(CombineActivity.this, GarmentActivity.class);
-                                                           for(SelectableGarment s : selectableGarments){
-                                                               if(s.isSelected()){
-                                                                   ids.add(s.getId());
-                                                                   names.add(s.getName());
-                                                               }
-                                                           }
-                                                            if (ids.size() > 0) {
-                                                                i.putStringArrayListExtra("ids", ids);
-                                                                i.putStringArrayListExtra("names", names);
-                                                            }
-
-                                                           startActivity(i);
-                                                        }
-                                                    });
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-                            }
-
-
+                            getUserGarments(dataSnapshot);
                         }
 
 
@@ -137,6 +84,93 @@ public class CombineActivity extends AppCompatActivity{
         }
     }
 
+
+    private void getUserGarments(DataSnapshot dataSnapshot){
+        final List<String> garmentsId = (ArrayList<String>) dataSnapshot.getValue();
+        final List<SelectableGarment> selectableGarments = new ArrayList<>();
+        for (String id : garmentsId) {
+            FirebaseDatabase.getInstance().getReference().child("garments").child(id)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Garment garment = dataSnapshot.getValue(Garment.class);
+                            createSelectableGarments(garment, selectableGarments);
+                            //final SelectableGarment selectableGarment = new SelectableGarment(garment, false);
+                            //selectableGarments.add(selectableGarment);
+                            createRecyclerAtFinish(selectableGarments, garmentsId);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+        }
+
+    }
+
+
+    private void createRecyclerAtFinish(final List<SelectableGarment> selectableGarments, List<String> garmentsId){
+        if (selectableGarments.size() == garmentsId.size()) {
+            adapter = new SelectableGarmentAdapter(selectableGarments);
+            mRecycler.setAdapter(adapter);
+            btnUpdateGarmentCombination.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    updateGarmentCombination(selectableGarments);
+                }
+            });
+        }
+    }
+
+
+    private void updateGarmentCombination(List<SelectableGarment> selectableGarments){
+        ArrayList<String> ids = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
+        Intent i = new Intent(CombineActivity.this, GarmentActivity.class);
+        for (SelectableGarment s : selectableGarments){
+            System.out.println(s.isSelected() + ")))))))))))))))))))))))))))))))");
+        }
+        for (SelectableGarment s : selectableGarments) {
+            if (s.isSelected()) {
+                ids.add(s.getId());
+                names.add(s.getName());
+            }
+        }
+        if (ids.size() > 0) {
+            i.putStringArrayListExtra("ids", ids);
+            i.putStringArrayListExtra("names", names);
+        }
+
+        startActivity(i);
+    }
+
+    private void createSelectableGarments(Garment garment,  List<SelectableGarment> selectableGarments){
+        SelectableGarment selectableGarment = new SelectableGarment(garment, false);
+        if(idsSelected == null) {
+            idsSelected = (ArrayList<String>) garment.getGarments();
+        }
+        if (idsSelected != null) {
+            if(idsSelected.contains(garment.getId())){
+                selectableGarment = new SelectableGarment(garment, true);
+            }
+        }
+        selectableGarments.add(selectableGarment);
+
+
+
+    }
+
+
+
+    private ArrayList<String> updateIdsSelected(){
+        Bundle data = this.getIntent().getExtras();
+        if (data != null) {
+            return data.getStringArrayList("ids");
+        } else {
+            return new ArrayList<>();
+        }
+    }
 
 }
 

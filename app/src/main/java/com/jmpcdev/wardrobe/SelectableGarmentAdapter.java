@@ -17,6 +17,7 @@ public class SelectableGarmentAdapter extends RecyclerView.Adapter {
 
 
 
+
     public SelectableGarmentAdapter(List<SelectableGarment> selectableGarments) {
         this.selectableGarments = selectableGarments;
     }
@@ -40,6 +41,7 @@ public class SelectableGarmentAdapter extends RecyclerView.Adapter {
         holder.txvSelectableGarmentDescription.setText(g.getDescription());
         holder.txvSelectableGarmentType.setText(g.getType());
         holder.selectableGarment = g;
+        holder.checkCardView(g.isSelected());
         holder.selectableGarments = selectableGarments;
     }
 

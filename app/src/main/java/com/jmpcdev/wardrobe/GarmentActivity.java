@@ -42,6 +42,8 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
     private List<TemperaturesGarment> temperaturesGarment = new ArrayList<TemperaturesGarment>();
     private List<String> types = new ArrayList<>();
 
+    private ArrayList<String> idsSelected;
+
 
     private FirebaseAuth mAuth;
 
@@ -116,16 +118,18 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
         btnCombine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GarmentActivity.this, CombineActivity.class));
+                Intent i = new Intent(GarmentActivity.this, CombineActivity.class);
+                i.putStringArrayListExtra("ids", idsSelected);
+                startActivity(i);
             }
         });
 
 
         Bundle data = this.getIntent().getExtras();
         if (data != null){
-            ArrayList<String> ids  = data.getStringArrayList("ids");
+            idsSelected  = data.getStringArrayList("ids");
             String s = "";
-            for(String id : ids){
+            for(String id : idsSelected){
                 s += id + ", ";
             }
             btnCombine.setText(s.substring(0,s.length()-2));
@@ -140,9 +144,6 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
-
-
-
     }
 
 
@@ -161,7 +162,11 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
         String brandname = edtBrandname.getText().toString();
         final Garment garment = new Garment("prueba", name, type, description, color, tissue, temperaturesGarment, brandname);
         garment.addUser(currentUser.getUid());
+        for(String id : idsSelected){
+            garment.addGarment(id);
+        }
         DatabaseReference mDataBaseGarmentsGarmentId = mDataBase.child("garments").child(garment.getId());
+        mDataBaseGarmentsGarmentId.child("id").setValue(garment.getId());
         mDataBaseGarmentsGarmentId.child("name").setValue(garment.getName());
         mDataBaseGarmentsGarmentId.child("image").setValue(garment.getImage());
         mDataBaseGarmentsGarmentId.child("type").setValue(garment.getType());
@@ -171,6 +176,7 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
         mDataBaseGarmentsGarmentId.child("temperature").setValue(garment.getTemperature());
         mDataBaseGarmentsGarmentId.child("brandname").setValue(garment.getBrandName());
         mDataBaseGarmentsGarmentId.child("users").setValue(garment.getUsers());
+        mDataBaseGarmentsGarmentId.child("garments").setValue(garment.getGarments());
         FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).child("garments")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

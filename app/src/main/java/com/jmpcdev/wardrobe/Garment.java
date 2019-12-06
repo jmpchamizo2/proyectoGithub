@@ -23,7 +23,7 @@ public class Garment {
 
 
     public Garment(String image, String name, String type, String description, String color, String tissue, List<TemperaturesGarment> temperature, String brandName) {
-        this.id = UUID.randomUUID().toString();;
+        this.id = UUID.randomUUID().toString();
         this.image = image;
         this.name = name;
         this.type = type;
@@ -36,6 +36,10 @@ public class Garment {
         users = new ArrayList<String>();
         washing = false;
     }
+
+
+
+
 
     public String getId(){
         return id;
@@ -131,11 +135,14 @@ public class Garment {
         return washing;
     }
 
+    public void setWashing(boolean washing){
+        this.washing = washing;
+    }
     public void toWardrobe(){
         washing = false;
     }
 
-    public void toWahs(){
+    public void toWash(){
         washing = true;
     }
 }
