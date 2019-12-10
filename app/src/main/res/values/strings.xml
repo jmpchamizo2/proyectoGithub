@@ -44,6 +44,22 @@
     <string name="tracksuit">Chandal</string>
     <string name="swimsuit">Bañador</string>
     <string name="dress">Vestido</string>
-
+    <string name="choose_app">Escoge app</string>
+    <string name="under0">Por debajo de 0ºC</string>
+    <string name="under5">Entre 0 y 5ºC</string>
+    <string name="under10">Entre 5 y 10ºC</string>
+    <string name="under15">Entre 10 y 15ºC</string>
+    <string name="under20">Entre 15 y 20ºC</string>
+    <string name="under25">Entre 20 y 25ºC</string>
+    <string name="under30">Entre 25 y 30ºC</string>
+    <string name="above30">Por encima de 30ºC</string>
+    <string name="message_read_storage"> Necesitamos acceder al almacenamiento del dispositivo para poder subir
+    la foto de tu prenda.</string>
+    <string name="message_camera"> Necesitamos acceder a la camara del dispositivo para poder capturar
+    la foto de tu prenda.</string>
+    <string name="store_dialog_title">Permiso acceso almacenamiento</string>
+    <string name="camera_dialog_title">Permiso acceso camara</string>
+    <string name="message_write_storage"> Necesitamos acceder al almacenamiento del dispositivo para poder guardar
+    la foto de tu prenda.</string>
 </resources>
 

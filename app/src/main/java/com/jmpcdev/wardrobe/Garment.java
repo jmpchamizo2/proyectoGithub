@@ -1,5 +1,6 @@
 package com.jmpcdev.wardrobe;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +16,7 @@ public class Garment {
     private String tissue;
     private List<TemperaturesGarment> temperature;
     private String brandName;
-    private List<String> garments;
+    private List<String> combine;
     private List<String> users;
     private boolean washing;
 
@@ -32,12 +33,10 @@ public class Garment {
         this.tissue = tissue;
         this.temperature = temperature;
         this.brandName = brandName;
-        garments = new ArrayList<String>();
+        combine = new ArrayList<String>();
         users = new ArrayList<String>();
         washing = false;
     }
-
-
 
 
 
@@ -97,7 +96,6 @@ public class Garment {
         return temperature;
     }
 
-
     public String getBrandName() {
         return brandName;
     }
@@ -106,18 +104,17 @@ public class Garment {
         this.brandName = brandName;
     }
 
-    public boolean addGarment(String garmentId){
-        return garments.add(garmentId);
+    public boolean addCombine(String garmentId){
+        return combine.add(garmentId);
     }
 
-    public boolean removeGarment(String garmentId){
-        return garments.remove(garmentId);
+    public boolean removeCombine(String garmentId){
+        return combine.remove(garmentId);
     }
 
-    public List<String> getGarments(){
-        return  garments;
+    public List<String> getCombine(){
+        return  combine;
     }
-
 
     public boolean addUser(String userId){
         return users.add(userId);
@@ -138,6 +135,7 @@ public class Garment {
     public void setWashing(boolean washing){
         this.washing = washing;
     }
+
     public void toWardrobe(){
         washing = false;
     }

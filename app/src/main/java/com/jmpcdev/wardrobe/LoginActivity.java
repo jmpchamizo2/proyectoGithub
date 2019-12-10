@@ -118,7 +118,6 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             FirebaseUser currentUser = mAuth.getCurrentUser();
-                            System.out.println(currentUser.getEmail());
                             User inneruser = dataSnapshot.getValue(User.class);
 
                             if(inneruser.getEmail().equals(currentUser.getEmail())){

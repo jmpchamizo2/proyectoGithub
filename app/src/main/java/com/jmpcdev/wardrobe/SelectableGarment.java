@@ -1,20 +1,18 @@
 package com.jmpcdev.wardrobe;
 
 import androidx.annotation.Nullable;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class SelectableGarment extends Garment {
     private boolean isSelected = false;
     private String id;
-    private List<String> garments, users;
+    private List<String> combine, users;
 
     public SelectableGarment(Garment garment, boolean isSelected) {
         super(garment.getImage(), garment.getName(), garment.getType(), garment.getDescription(), garment.getColor(), garment.getTissue(), garment.getTemperature(), garment.getBrandName());
         this.id = garment.getId();
         this.isSelected = isSelected;
-        this.garments = garment.getGarments();
+        this.combine = garment.getCombine();
         this.users = garment.getUsers();
         this.setWashing(isWashing());
 
@@ -28,8 +26,8 @@ public class SelectableGarment extends Garment {
 
 
     @Override
-    public List<String> getGarments() {
-        return garments;
+    public List<String> getCombine() {
+        return combine;
     }
 
 

@@ -56,21 +56,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Tipo"
-                app:layout_constraintBottom_toBottomOf="@id/checkedTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imvSelectableGarmentCard"
                 app:layout_constraintTop_toBottomOf="@id/txvSelectableDescGarment"
-                app:layout_constraintWidth_percent="0.5" />
-
-            <CheckedTextView
-                android:id="@+id/checkedTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="CheckedTextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imvSelectableGarmentCard"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txvSelectableTypeGarment"
                 app:layout_constraintWidth_percent="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

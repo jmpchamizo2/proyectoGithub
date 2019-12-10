@@ -1,17 +1,12 @@
 package com.jmpcdev.wardrobe;
 
-import android.content.res.Resources;
+
 import android.graphics.Color;
 import android.view.View;
-import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.io.CharArrayReader;
 import java.util.List;
 
 public class SelectableViewHolder extends RecyclerView.ViewHolder {
@@ -30,6 +25,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
         txvSelectableGarmentDescription = view.findViewById(R.id.txvSelectableDescGarment);
         txvSelectableGarmentName = view.findViewById(R.id.txvSelectableNameGarment);
         txvSelectableGarmentType = view.findViewById(R.id.txvSelectableTypeGarment);
+        imvSelectableGarmentImage = view.findViewById(R.id.imvSelectableGarmentCard);
         cardView = (CardView) view.findViewById(R.id.cdvSelectableGarment);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,9 +47,6 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
         view.setActivated(!view.isActivated());
         selectableGarment.setSelected(!selectableGarment.isSelected());
         selectableGarments.set(selectableGarments.indexOf(selectableGarment), selectableGarment);
-        for (SelectableGarment s : selectableGarments){
-            System.out.println(s.isSelected() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
     }
 
     public void checkCardView(boolean setBackground){

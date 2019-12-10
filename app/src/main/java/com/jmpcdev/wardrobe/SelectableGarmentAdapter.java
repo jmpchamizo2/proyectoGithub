@@ -1,14 +1,11 @@
 package com.jmpcdev.wardrobe;
 
-import android.util.TypedValue;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.lang.reflect.GenericArrayType;
-import java.util.ArrayList;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class SelectableGarmentAdapter extends RecyclerView.Adapter {
@@ -43,6 +40,8 @@ public class SelectableGarmentAdapter extends RecyclerView.Adapter {
         holder.selectableGarment = g;
         holder.checkCardView(g.isSelected());
         holder.selectableGarments = selectableGarments;
+        Picasso.get().load(Uri.parse(g.getImage())).
+                into(holder.imvSelectableGarmentImage);
     }
 
     @Override

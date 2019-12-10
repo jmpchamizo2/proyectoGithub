@@ -26,7 +26,7 @@ import java.util.List;
 
 public class CombineActivity extends AppCompatActivity{
     private RecyclerView mRecycler;
-    private RecyclerView.Adapter mAdapter;
+
 
     private FloatingActionButton btnUpdateGarmentCombination;
 
@@ -44,14 +44,10 @@ public class CombineActivity extends AppCompatActivity{
         setContentView(R.layout.activity_combine);
 
         mAuth = FirebaseAuth.getInstance();
-
         mRecycler = findViewById(R.id.recyclerCombine);
         mRecycler.setHasFixedSize(true);
-
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-
         btnUpdateGarmentCombination = findViewById(R.id.floatingActionButton3);
-
         idsSelected = updateIdsSelected();
 
 
@@ -87,6 +83,9 @@ public class CombineActivity extends AppCompatActivity{
 
     private void getUserGarments(DataSnapshot dataSnapshot){
         final List<String> garmentsId = (ArrayList<String>) dataSnapshot.getValue();
+        if(garmentsId == null){
+            return;
+        }
         final List<SelectableGarment> selectableGarments = new ArrayList<>();
         for (String id : garmentsId) {
             FirebaseDatabase.getInstance().getReference().child("garments").child(id)
@@ -95,19 +94,16 @@ public class CombineActivity extends AppCompatActivity{
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Garment garment = dataSnapshot.getValue(Garment.class);
                             createSelectableGarments(garment, selectableGarments);
-                            //final SelectableGarment selectableGarment = new SelectableGarment(garment, false);
-                            //selectableGarments.add(selectableGarment);
                             createRecyclerAtFinish(selectableGarments, garmentsId);
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
                         }
                     });
         }
-
     }
+
 
 
     private void createRecyclerAtFinish(final List<SelectableGarment> selectableGarments, List<String> garmentsId){
@@ -128,9 +124,6 @@ public class CombineActivity extends AppCompatActivity{
         ArrayList<String> ids = new ArrayList<>();
         ArrayList<String> names = new ArrayList<>();
         Intent i = new Intent(CombineActivity.this, GarmentActivity.class);
-        for (SelectableGarment s : selectableGarments){
-            System.out.println(s.isSelected() + ")))))))))))))))))))))))))))))))");
-        }
         for (SelectableGarment s : selectableGarments) {
             if (s.isSelected()) {
                 ids.add(s.getId());
@@ -147,9 +140,6 @@ public class CombineActivity extends AppCompatActivity{
 
     private void createSelectableGarments(Garment garment,  List<SelectableGarment> selectableGarments){
         SelectableGarment selectableGarment = new SelectableGarment(garment, false);
-        if(idsSelected == null) {
-            idsSelected = (ArrayList<String>) garment.getGarments();
-        }
         if (idsSelected != null) {
             if(idsSelected.contains(garment.getId())){
                 selectableGarment = new SelectableGarment(garment, true);

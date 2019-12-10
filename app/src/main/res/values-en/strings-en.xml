@@ -45,4 +45,21 @@
     <string name="tracksuit">Tracksuit</string>
     <string name="swimsuit">Swimsuit</string>
     <string name="dress">Dress</string>
+    <string name="choose_app">Choose app</string>
+    <string name="under0">Under 0ºC</string>
+    <string name="under5">Between 0 y 5ºC</string>
+    <string name="under10">Between 5 and 10ºC</string>
+    <string name="under15">Between 10 and 15ºC</string>
+    <string name="under20">Between 15 and 20ºC</string>
+    <string name="under25">Between 20 and 25ºC</string>
+    <string name="under30">Between 25 and 30ºC</string>
+    <string name="above30">Above 30ºC</string>
+    <string name="message_read_storage"> We need to access the device storage in order to upload
+        a photo of your clothe.</string>
+    <string name="store_dialog_title">Permission device storage</string>
+    <string name="message_camera"> We need to access the device camera in order to capture
+        a photo of your clothe.</string>
+    <string name="camera_dialog_title">Permission device camera</string>
+    <string name="message_write_storage"> We need to access the device storage in order to save
+        a photo of your clothe.</string>
 </resources>

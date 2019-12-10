@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="temperatures">
-       <!-- <item>"<0"</item> -->
-        <item>"0-5"</item>
-        <item>"5-10</item>
-        <item>"10-15</item>
-        <item>"20-25</item>
-        <item>"25-30</item>
-        <item>">30"</item>
+       <item>@string/under0</item>
+        <item>@string/under5</item>
+        <item>@string/under10</item>
+        <item>@string/under15</item>
+        <item>@string/under20</item>
+        <item>@string/under25</item>
+        <item>@string/under30</item>
+        <item>@string/above30</item>
     </string-array>
     <string-array name="types">
         <item>@string/hat</item>
