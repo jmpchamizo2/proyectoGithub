@@ -1,5 +1,6 @@
 package com.jmpcdev.wardrobe;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,8 @@ public class GarmentAdapter extends RecyclerView.Adapter<GarmentAdapter.ViewHold
         holder.txvName.setText(garments.get(position).getName());
         holder.txvDescript.setText(garments.get(position).getDescription());
         holder.txvType.setText(garments.get(position).getType());
+        Picasso.get().load(Uri.parse(garments.get(position).getImage())).
+                into(holder.imvGarmentCard);
     }
 
     @Override

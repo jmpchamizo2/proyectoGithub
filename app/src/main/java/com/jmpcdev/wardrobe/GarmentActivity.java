@@ -578,7 +578,7 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
                     reducePhoto(path);
                     return;
                 case (CODE_CAMERA):
-                    
+
                     galleryAddPic();
                     setPic();
                     return;
