@@ -85,15 +85,23 @@ public class MultiSpinner extends AppCompatSpinner implements
     }
 
     public void setItems(List<String> items, String allText,
-                         MultiSpinnerListener listener) {
+                         MultiSpinnerListener listener, List<Integer> itemSelected) {
         this.items = items;
         this.defaultText = allText;
         this.listener = listener;
 
         // all selected by default
         selected = new boolean[items.size()];
-        for (int i = 0; i < selected.length; i++)
+        for (int i = 0; i < selected.length; i++) {
             selected[i] = false;
+            for (int j : itemSelected) {
+                if(i == j){
+                    selected[i] = true;
+                }
+
+            }
+
+        }
 
         // all text on the spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),

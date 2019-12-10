@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CombineActivity extends AppCompatActivity{
@@ -135,6 +137,7 @@ public class CombineActivity extends AppCompatActivity{
             i.putStringArrayListExtra("names", names);
         }
 
+        prepareExtras(i);
         startActivity(i);
     }
 
@@ -155,12 +158,45 @@ public class CombineActivity extends AppCompatActivity{
 
     private ArrayList<String> updateIdsSelected(){
         Bundle data = this.getIntent().getExtras();
-        if (data != null) {
+        if (data != null && data.getStringArrayList("ids") != null) {
             return data.getStringArrayList("ids");
         } else {
             return new ArrayList<>();
         }
     }
+
+
+    private void prepareExtras(Intent i){
+        Bundle data = this.getIntent().getExtras();
+        Intent intent = getIntent();
+        if (data != null){
+            if(data.getString("nameGarment") != null){
+                i.putExtra("nameGarment", data.getString("nameGarment"));
+            }
+            if(data.getString("brandName") != null){
+                i.putExtra("brandName", data.getString("brandName"));
+            }
+            if(data.getString("description") != null){
+                i.putExtra("description", data.getString("description"));
+            }
+            if(data.getString("color") != null){
+                i.putExtra("color", data.getString("color"));
+            }
+            if(data.getString("tissue") != null){
+                i.putExtra("tissue", data.getString("tissue"));
+            }
+            if(data.getIntegerArrayList("itemsSelected") != null) {
+                i.putIntegerArrayListExtra("itemsSelected", data.getIntegerArrayList("itemsSelected"));
+            }
+            if(getIntent().getByteArrayExtra("bitmap") != null){
+                i.putExtra("bitmap", getIntent().getByteArrayExtra("bitmap"));
+            }
+            i.putExtra("itemSelected", data.getInt("itemSelected"));
+
+        }
+
+    }
+
 
 }
 

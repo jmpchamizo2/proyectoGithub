@@ -67,6 +67,7 @@ import java.util.List;
 import java.util.Locale;
 
 
+
 public class GarmentActivity extends AppCompatActivity implements MultiSpinner.MultiSpinnerListener {
 
     private final int PERMISSION_READ_EXTERNAL_STORAGE = 1;
@@ -85,6 +86,9 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
     private Spinner spinnerType;
     private ImageButton imbCamera, imbSelectPhoto;
     private ImageView imvGarmentPreview;
+
+    private List<Integer> itemsSelected = new ArrayList<>();
+    private int itemSelected = -1;
 
 
 
@@ -110,9 +114,9 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
 
         mAuth = FirebaseAuth.getInstance();
         getViews();
+        checkIntentExtras();
         prepareSpinners();
         prepareOnClickListener();
-        checkIntentExtras();
     }
 
 
@@ -147,40 +151,13 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
         updateImageUser(garment, mDataBaseGarmentsGarmentId);
 
 
-
-        /**
-        UploadTask uploadTask = garmentsRef.putFile(Uri.parse(garment.getImage()));
-
-
-
-
-        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
-
-                // Continue with the task to get the download URL
-                return garmentsRef.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    mDataBaseGarmentsGarmentId.child("image").setValue(downloadUri.toString());
-                }
-            }
-        });
-         */
-
     }
 
 
     private Garment createGarment(){
         String name = edtNameGarment.getText().toString();
         String type = spinnerType.getSelectedItem().toString();
+
         String description = edtDesc.getText().toString();
         String color = edtColor.getText().toString();
         String tissue = edtTissue.getText().toString();
@@ -188,6 +165,8 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
 
         String brandname = edtBrandname.getText().toString();
         final Garment garment = new Garment("temp", name, type, description, color, tissue, temperaturesGarment, brandname);
+
+
         garment.addUser(mAuth.getCurrentUser().getUid());
         if(idsSelected != null){
             for(String id : idsSelected){
@@ -255,6 +234,7 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
         for(int i = 0; i < selected.length; i++){
             if(selected[i]){
                 temperaturesGarment.add(TemperaturesGarment.values()[i]);
+                itemsSelected.add(i);
             }
         }
     }
@@ -280,7 +260,7 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(GarmentActivity.this, CombineActivity.class);
-                i.putStringArrayListExtra("ids", idsSelected);
+                prepareExtras(i);
                 startActivity(i);
             }
         });
@@ -302,32 +282,100 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
 
     }
 
+    private void prepareExtras(Intent i){
+        i.putStringArrayListExtra("ids", idsSelected);
+        if(edtNameGarment.getText() != null){
+            i.putExtra("nameGarment", edtNameGarment.getText().toString());
+        }
+        if(edtBrandname.getText() != null){
+            i.putExtra("brandName", edtBrandname.getText().toString());
+        }
+        if(edtDesc.getText() != null){
+            i.putExtra("description", edtDesc.getText().toString());
+        }
+        if(edtColor.getText() != null){
+            i.putExtra("color", edtColor.getText().toString());
+        }
+        if(edtTissue.getText() != null){
+            i.putExtra("tissue", edtTissue.getText().toString());
+        }
+        if(itemsSelected.size() > 0){
+            i.putIntegerArrayListExtra("itemsSelected", (ArrayList<Integer>) itemsSelected);
+        }
+        if(bitmap != null){
+            ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bStream);
+            byte[] byteArray = bStream.toByteArray();
+            i.putExtra("bitmap", byteArray);
+        }
 
+        itemSelected = Arrays.asList(getResources().getStringArray(R.array.types)).indexOf(spinnerType.getSelectedItem());
+        i.putExtra("itemSelected", itemSelected);
+    }
 
 
 
     private void checkIntentExtras(){
         Bundle data = this.getIntent().getExtras();
         if (data != null){
-            idsSelected  = data.getStringArrayList("ids");
-            String s = "";
-            for(String id : idsSelected){
-                s += id + ", ";
+            if(data.getStringArrayList("ids") != null && data.getStringArrayList("ids").size()>0){
+                idsSelected  = data.getStringArrayList("ids");
+                String s = "";
+                for(String id : idsSelected){
+                    s += id + ", ";
+                }
+                btnCombine.setText(s.substring(0,s.length()-2));
             }
-            btnCombine.setText(s.substring(0,s.length()-2));
+            if(data.getString("nameGarment") != null){
+                edtNameGarment.setText(data.getString("nameGarment"));
+            }
+            if(data.getString("brandName") != null){
+                edtBrandname.setText(data.getString("brandName"));
+            }
+            if(data.getString("description") != null){
+                edtDesc.setText(data.getString("description"));
+            }
+            if(data.getString("color") != null){
+                edtColor.setText(data.getString("color"));
+            }
+            if(data.getString("tissue") != null){
+                edtTissue.setText(data.getString("tissue"));
+            }
+            itemSelected = data.getInt("itemSelected");
+            if(data.getIntegerArrayList("itemsSelected") != null && data.getIntegerArrayList("itemsSelected").size() > 0) {
+                itemsSelected = data.getIntegerArrayList("itemsSelected");
+            }
+            if(getIntent().getByteArrayExtra("bitmap") != null){
+                byte[] byteArray = getIntent().getByteArrayExtra("bitmap");
+                bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                imvGarmentPreview.setImageBitmap(bitmap);
+            }
+
+
+
         }
     }
 
 
     private void prepareSpinners(){
-        multiSpinnerTemperature.setItems(Arrays.asList(getResources().getStringArray(R.array.temperatures)), getString(R.string.select_temperature),  this);
+        String title = "";
+        List<String> items = Arrays.asList(getResources().getStringArray(R.array.temperatures));
+
+        if(itemsSelected.size() > 0){
+            for(int item : itemsSelected){
+                title += items.get(item) + ", ";
+            }
+            title = title.substring(0, title.length()-2);
+        } else {
+            title = getString(R.string.select_temperature);
+        }
+        multiSpinnerTemperature.setItems(Arrays.asList(getResources().getStringArray(R.array.temperatures)), title,  this, itemsSelected);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.types, R.layout.custom_spinner_items);
-
-
-
-        //ArrayAdapter<String> adapater = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, types);
         spinnerType.setAdapter(adapter);
-        spinnerType.setPrompt(getString(R.string.select_type));
+        if (itemSelected != -1) {
+            spinnerType.setSelection(itemSelected);
+        }
 
     }
 
@@ -542,13 +590,6 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
     }
 
 
-
-
-
-
-
-
-
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -635,9 +676,7 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         Bitmap temp = BitmapFactory.decodeFile(route, bmOptions);
         int photoW = temp.getWidth();
-        System.out.println("PHOTOW: " + photoW + "//////////////////////////////");
         int photoH = temp.getHeight();
-        System.out.println("PHOTOH: " + photoH + "//////////////////////////////");
 
         // Determine how much to scale down the image
         int scaleFactor = Math.min(photoW/PHOTO_SIZE, photoH/PHOTO_SIZE);
@@ -659,6 +698,7 @@ public class GarmentActivity extends AppCompatActivity implements MultiSpinner.M
             byte[] data = baos.toByteArray();
 
             UploadTask uploadTask = garmentsRef.putBytes(data);
+
             uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
