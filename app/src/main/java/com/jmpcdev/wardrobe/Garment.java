@@ -15,7 +15,7 @@ public class Garment {
     private String color;
     private String tissue;
     private List<TemperaturesGarment> temperature;
-    private String brandName;
+    private String brandname;
     private List<String> combine;
     private List<String> users;
     private boolean washing;
@@ -23,7 +23,7 @@ public class Garment {
     public Garment(){}
 
 
-    public Garment(String image, String name, String type, String description, String color, String tissue, List<TemperaturesGarment> temperature, String brandName) {
+    public Garment(String image, String name, String type, String description, String color, String tissue, List<TemperaturesGarment> temperature, String brandname) {
         this.id = UUID.randomUUID().toString();
         this.image = image;
         this.name = name;
@@ -32,7 +32,7 @@ public class Garment {
         this.color = color;
         this.tissue = tissue;
         this.temperature = temperature;
-        this.brandName = brandName;
+        this.brandname = brandname;
         combine = new ArrayList<String>();
         users = new ArrayList<String>();
         washing = false;
@@ -97,11 +97,11 @@ public class Garment {
     }
 
     public String getBrandName() {
-        return brandName;
+        return brandname;
     }
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
+    public void setBrandName(String brandname) {
+        this.brandname = brandname;
     }
 
     public boolean addCombine(String garmentId){

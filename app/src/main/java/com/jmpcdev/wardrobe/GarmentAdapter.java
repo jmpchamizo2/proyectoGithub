@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -37,6 +38,7 @@ public class GarmentAdapter extends RecyclerView.Adapter<GarmentAdapter.ViewHold
         holder.txvType.setText(garments.get(position).getType());
         Picasso.get().load(Uri.parse(garments.get(position).getImage())).
                 into(holder.imvGarmentCard);
+
     }
 
     @Override
@@ -45,8 +47,10 @@ public class GarmentAdapter extends RecyclerView.Adapter<GarmentAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         private TextView txvName,txvDescript, txvType;
         private ImageView imvGarmentCard;
+        private CardView cdvGarment;
         public ViewHolder(View v) {
             super(v);
             txvName = (TextView) v.findViewById(R.id.txvNameGarment);

@@ -62,4 +62,6 @@
     <string name="camera_dialog_title">Permission device camera</string>
     <string name="message_write_storage"> We need to access the device storage in order to save
         a photo of your clothe.</string>
+    <string name="toWash">To wash</string>
+    <string name="toWardrobe">To wardrobe</string>
 </resources>

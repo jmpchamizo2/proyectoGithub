@@ -61,5 +61,7 @@
     <string name="camera_dialog_title">Permiso acceso camara</string>
     <string name="message_write_storage"> Necesitamos acceder al almacenamiento del dispositivo para poder guardar
     la foto de tu prenda.</string>
+    <string name="toWash">A lavar</string>
+    <string name="toWardrobe">Al armario</string>
 </resources>
 

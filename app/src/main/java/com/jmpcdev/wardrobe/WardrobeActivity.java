@@ -60,15 +60,17 @@ public class WardrobeActivity extends AppCompatActivity {
                             final List<String> garmetnsId = (ArrayList<String>) dataSnapshot.getValue();
                             final List<Garment> garments = new ArrayList<>();
                             for(String id : garmetnsId){
-                                FirebaseUser currentUser = mAuth.getCurrentUser();
                                 FirebaseDatabase.getInstance().getReference().child("garments").child(id)
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         Garment garment = dataSnapshot.getValue(Garment.class);
-                                        garments.add(garment);
+                                        if(!garment.isWashing()){
+                                            garments.add(garment);
+                                        }
                                         if(garments.size() == garmetnsId.size()){
-                                            mAdapter = new GarmentAdapter(garments);
+                                            //mAdapter = new GarmentAdapter(garments);
+                                            mAdapter = new WashAdapter(garments);
                                             mRecycler.setAdapter(mAdapter);
                                         }
                                     }

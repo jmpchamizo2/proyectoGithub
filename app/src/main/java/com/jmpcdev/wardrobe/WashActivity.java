@@ -53,24 +53,46 @@ public class WashActivity extends AppCompatActivity {
             FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).child("garments")
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                Garment garment = ds.getValue(Garment.class);
-                                if (garment.isWashing()) {
-                                    garments.add(garment);
-                                }
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final List<String> garmetnsId = (ArrayList<String>) dataSnapshot.getValue();
+                            final List<Garment> garments = new ArrayList<>();
+                            for (String id : garmetnsId) {
+                                FirebaseDatabase.getInstance().getReference().child("garments").child(id)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                Garment garment = dataSnapshot.getValue(Garment.class);
+                                                if (garment.isWashing()) {
+                                                    garments.add(garment);
+                                                }
+                                                if (garments.size() == garmetnsId.size()) {
+                                                    mAdapter = new GarmentAdapter(garments);
+                                                    mRecycler.setAdapter(mAdapter);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
 
                             }
-                            mAdapter = new GarmentAdapter(garments);
-                            mRecycler.setAdapter(mAdapter);
+
+
                         }
+
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
-
                     });
+
         }
     }
+
+
 }
+
