@@ -1,7 +1,9 @@
 package com.jmpcdev.wardrobe;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,16 +23,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class WashHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+public class WardrobeHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 
     TextView txvName,txvDescript, txvType;
     ImageView imvGarmentCard;
     Garment garment;
     View v;
 
-    public WashHolder(@NonNull View v) {
+    public WardrobeHolder(@NonNull View v) {
         super(v);
         txvName = (TextView) v.findViewById(R.id.txvNameGarment);
         txvDescript = (TextView) v.findViewById(R.id.txvDescGarment);
@@ -42,7 +47,7 @@ public class WashHolder extends RecyclerView.ViewHolder implements View.OnCreate
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.setHeaderTitle(v.getResources().getString(R.string.select_action));
-        MenuItem toWash = menu.add(0, 0, 0, v.getResources().getString(R.string.toWardrobe));//groupId, itemId, order, title
+        MenuItem toWash = menu.add(0, 0, 0, v.getResources().getString(R.string.toWash));//groupId, itemId, order, title
         MenuItem delete = menu.add(0, 1, 0, v.getResources().getString(R.string.delete));
         toWash.setOnMenuItemClickListener(this);
         delete.setOnMenuItemClickListener(this);
@@ -56,11 +61,11 @@ public class WashHolder extends RecyclerView.ViewHolder implements View.OnCreate
         switch (item.getItemId()){
             case 0:
                 new AlertDialog.Builder(v.getRootView().getContext())
-                        .setMessage(v.getResources().getString(R.string.wardrobe_message))
-                        .setPositiveButton(v.getResources().getString(R.string.accept_wardrobe), new DialogInterface.OnClickListener() {
+                        .setMessage(v.getResources().getString(R.string.wash_message))
+                        .setPositiveButton(v.getResources().getString(R.string.accept_wash), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                garment.setWashing(false);
+                                garment.setWashing(true);
                                 mDataBaseGarmentsGarmentId.child("washing").setValue(garment.isWashing());
 
                             }
@@ -91,7 +96,6 @@ public class WashHolder extends RecyclerView.ViewHolder implements View.OnCreate
                                         garmentsId.remove(garment.getId());
                                         FirebaseDatabase.getInstance().getReference().child("users")
                                                 .child(currentUser.getUid()).child("garments").setValue(garmentsId);
-                                        v.invalidate();
                                     }
 
                                     @Override

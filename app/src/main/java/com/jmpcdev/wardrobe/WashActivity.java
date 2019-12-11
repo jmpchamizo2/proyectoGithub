@@ -51,12 +51,13 @@ public class WashActivity extends AppCompatActivity {
         final List<Garment> garments = new ArrayList<>();
         if (currentUser != null) {
             FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).child("garments")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                    .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            final List<String> garmetnsId = (ArrayList<String>) dataSnapshot.getValue();
+                            final List<String> garmentsId = (ArrayList<String>) dataSnapshot.getValue();
                             final List<Garment> garments = new ArrayList<>();
-                            for (String id : garmetnsId) {
+                            final int[] count = {garmentsId.size()};
+                            for (String id : garmentsId) {
                                 FirebaseDatabase.getInstance().getReference().child("garments").child(id)
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
@@ -64,9 +65,10 @@ public class WashActivity extends AppCompatActivity {
                                                 Garment garment = dataSnapshot.getValue(Garment.class);
                                                 if (garment.isWashing()) {
                                                     garments.add(garment);
+                                                    count[0]--;
                                                 }
-                                                if (garments.size() == garmetnsId.size()) {
-                                                    mAdapter = new GarmentAdapter(garments);
+                                                if (garments.size() + count[0] == garmentsId.size()) {
+                                                    mAdapter = new WashAdapter(garments);
                                                     mRecycler.setAdapter(mAdapter);
                                                 }
                                             }

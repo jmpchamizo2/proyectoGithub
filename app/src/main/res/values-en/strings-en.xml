@@ -64,4 +64,14 @@
         a photo of your clothe.</string>
     <string name="toWash">To wash</string>
     <string name="toWardrobe">To wardrobe</string>
+    <string name="delete">Delete</string>
+    <string name="select_action">Select the action:</string>
+    <string name="delete_garment">Do you want to remove the garment?</string>
+    <string name="accept_delete">Yes, remove it</string>
+    <string name="cancel">Cancel</string>
+    <string name="wash_message">Do you want to put the garment in the washing machine?</string>
+    <string name="accept_wash">Yes, to wash</string>
+    <string name="wardrobe_message">Do you want to return the garment to the wardrobe?</string>
+    <string name="accept_wardrobe">Yes, to the wardrobe+</string>
+
 </resources>

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,7 +15,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
 public class WardrobeActivity extends AppCompatActivity {
@@ -54,12 +52,13 @@ public class WardrobeActivity extends AppCompatActivity {
         final List<Garment> garments = new ArrayList<>();
         if (currentUser != null) {
             FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).child("garments")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                    .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            final List<String> garmetnsId = (ArrayList<String>) dataSnapshot.getValue();
+                            final List<String> garmentsId = (ArrayList<String>) dataSnapshot.getValue();
                             final List<Garment> garments = new ArrayList<>();
-                            for(String id : garmetnsId){
+                            final int[] count = {garmentsId.size()};
+                            for(String id : garmentsId){
                                 FirebaseDatabase.getInstance().getReference().child("garments").child(id)
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -67,10 +66,11 @@ public class WardrobeActivity extends AppCompatActivity {
                                         Garment garment = dataSnapshot.getValue(Garment.class);
                                         if(!garment.isWashing()){
                                             garments.add(garment);
+                                            count[0]--;
                                         }
-                                        if(garments.size() == garmetnsId.size()){
+                                        if(garments.size() + count[0] == garmentsId.size()){
                                             //mAdapter = new GarmentAdapter(garments);
-                                            mAdapter = new WashAdapter(garments);
+                                            mAdapter = new WardrobeAdapter(garments);
                                             mRecycler.setAdapter(mAdapter);
                                         }
                                     }
@@ -96,7 +96,6 @@ public class WardrobeActivity extends AppCompatActivity {
 
         }
     }
-
 
 
 }

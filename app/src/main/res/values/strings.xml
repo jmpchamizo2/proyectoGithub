@@ -63,5 +63,14 @@
     la foto de tu prenda.</string>
     <string name="toWash">A lavar</string>
     <string name="toWardrobe">Al armario</string>
+    <string name="delete">Eliminar</string>
+    <string name="select_action">Selecciona acción:</string>
+    <string name="delete_garment">¿Desea eliminar la prenda?</string>
+    <string name="accept_delete">Sí, eliminala</string>
+    <string name="cancel">Cancelar</string>
+    <string name="wash_message">¿Desea echar a la lavadora la prenda?</string>
+    <string name="accept_wash">Sí, a lavar</string>
+    <string name="wardrobe_message">¿Desea devolver la prenda al armario?</string>
+    <string name="accept_wardrobe">Si, al armario</string>
 </resources>
 

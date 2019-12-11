@@ -11,25 +11,25 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class WashAdapter extends RecyclerView.Adapter {
+public class WardrobeAdapter extends RecyclerView.Adapter {
 
     private List<Garment> garments;
 
-    public WashAdapter(List<Garment> garments) {
+    public WardrobeAdapter(List<Garment> garments) {
         this.garments = garments;
     }
 
     @Override
-    public WashHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public WardrobeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.garment_card, parent, false);
 
-        return new WashHolder(view);
+        return new WardrobeHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        WashHolder holder = (WashHolder) viewHolder;
+        WardrobeHolder holder = (WardrobeHolder) viewHolder;
         holder.txvName.setText(garments.get(position).getName());
         holder.txvDescript.setText(garments.get(position).getDescription());
         holder.txvType.setText(garments.get(position).getType());
