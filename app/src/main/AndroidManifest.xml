@@ -6,8 +6,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CombineActivity"></activity>
+        <activity android:name=".SelectOutfit"></activity>
+        <activity android:name=".ShowOutfitActivity" />
+        <activity android:name=".FinishOutfitActivity" />
+        <activity android:name=".OutfitActivity" />
+        <activity android:name=".CombineActivity" />
         <activity android:name=".WashActivity" />
         <activity android:name=".WardrobeActivity" />
         <activity android:name=".WearActivity" />
@@ -33,6 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.jmpcdev.wardrobe.fileprovider"
@@ -40,9 +47,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
-
     </application>
 
 </manifest>
